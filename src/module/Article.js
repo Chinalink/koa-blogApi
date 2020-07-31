@@ -2,7 +2,7 @@
  * @Description: 文章模型
  * @Author: HuGang
  * @Date: 2020-07-31 14:32:34
- * @LastEditTime: 2020-07-31 16:33:59
+ * @LastEditTime: 2020-07-31 17:08:01
  */ 
 
 const { DataTypes } = require('sequelize');
@@ -20,12 +20,12 @@ const Article = sequelize.define('Article', {
   }, 
   excerpt: {                            // 文章摘要
     type: DataTypes.STRING(200),
-    field: 'article_excerpt'
+    field: 'article_excerpt',
+    defaultValue: ''
   },
   content: {                            // 文章内容
     type: DataTypes.TEXT('long'),
-    field: 'article_content',
-    defaultValue: ''
+    field: 'article_content'
   },
   author: {                             // 作者ID
     type: DataTypes.INTEGER(11), 
@@ -33,7 +33,8 @@ const Article = sequelize.define('Article', {
   },
   status: {                             // 文章状态: 0:草稿、1:发布
     type: DataTypes.INTEGER(1),
-    field: 'article_status'
+    field: 'article_status',
+    defaultValue: 0
   },
   type: {
     type: DataTypes.STRING(20),         // 文章类型

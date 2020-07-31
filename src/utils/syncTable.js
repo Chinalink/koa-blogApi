@@ -2,20 +2,20 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:43:13
- * @LastEditTime: 2020-07-30 14:49:22
+ * @LastEditTime: 2020-07-31 17:05:54
  */ 
 // const sequelize = require('./dbConn');
 // sequelize.sync({force: true})
-const user = require('../module/user');
-const sort = require('../module/sort');
-const post = require('../module/post');
-const set_post_sort = require('../module/set_post_sort')
+const user = require('../module/User');
+const sort = require('../module/Sort');
+const article = require('../module/Article');
+const articleSort = require('../module/ArticleSort')
 
 const allModel = [
   user,
   sort,
-  post,
-  set_post_sort
+  article,
+  articleSort
 ]
 
 allModel.forEach((item) => {
