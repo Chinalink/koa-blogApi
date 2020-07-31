@@ -2,13 +2,13 @@
  * @Description: 文章模型
  * @Author: HuGang
  * @Date: 2020-07-31 14:32:34
- * @LastEditTime: 2020-07-31 17:08:01
+ * @LastEditTime: 2020-07-31 18:11:17
  */ 
 
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/dbConn');
 
-const Article = sequelize.define('Article', {
+const Article = sequelize.define('article', {
   id: {                                 // 文章ID
     type: DataTypes.INTEGER(11),
     primaryKey: true,                   // 主键

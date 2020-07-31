@@ -2,7 +2,7 @@
  * @Description: 文章相关Controller
  * @Author: HuGang
  * @Date: 2020-07-31 15:13:17
- * @LastEditTime: 2020-07-31 16:25:40
+ * @LastEditTime: 2020-07-31 17:12:41
  */ 
 
 const ArticleService = require('../service/ArticleService');
@@ -29,8 +29,8 @@ const querySortList = async (ctx, next) => {
 // 创建分类
 const createSort = async (ctx, next) => {
   // 判断必填项
-  const { sort_name } = ctx.request.body
-  if (!sort_name || sort_name === '') {
+  const { name } = ctx.request.body
+  if (!name || name === '') {
     throw HttpException.throwError('分类名称不能为空！', 4001)
   }
 

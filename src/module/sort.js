@@ -2,13 +2,13 @@
  * @Description: 分类表
  * @Author: HuGang
  * @Date: 2020-07-25 13:27:16
- * @LastEditTime: 2020-07-31 16:39:06
+ * @LastEditTime: 2020-07-31 18:11:11
  */ 
 
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/dbConn');
 
-const Sort = sequelize.define('Sort', {
+const Sort = sequelize.define('sort', {
   id: {
     type: DataTypes.INTEGER(11),
     primaryKey: true,                   // 主键
