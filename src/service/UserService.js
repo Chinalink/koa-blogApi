@@ -2,14 +2,14 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-07-22 13:06:37
+ * @LastEditTime: 2020-07-31 16:54:24
  */ 
 
  // sequelize
 https://github.com/demopark/sequelize-docs-Zh-CN/blob/master/core-concepts/getting-started.md
 
 // 查询
-var HttpException = require('../lib/httpException');
+var HttpException = require('../utils/httpException');
 var UserModel = require('../module/user');
 
 const checkUser = async (phone, password) => {
