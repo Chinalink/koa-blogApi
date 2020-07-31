@@ -2,19 +2,20 @@
  * @Description: 文章相关Api
  * @Author: HuGang
  * @Date: 2020-07-25 13:34:43
- * @LastEditTime: 2020-07-26 17:28:22
+ * @LastEditTime: 2020-07-31 15:24:33
  */ 
 
 const Router = require('@koa/router')
-const postController = require('../controller/article/postController.js')
-const sortController = require('../controller/article/sortController.js')
+const ArticleController = require('../controller/ArticleController');
 
 const router = new Router()
 
-router.post('post', '/artice/post/createPost', postController.createPost)
+// 文章CURD
+router.get('post', '/article/post/queryArticleList', ArticleController.queryArticleList) // 所有文章
+router.post('post', '/article/post/createPost', ArticleController.createArticle) // 创建文章
 
-// 文章分类
-router.get('sort', '/artice/sort/querySortList', sortController.queryAllSort)
-router.post('sort', '/article/sort/createSort', sortController.createSort)
+// 文章分类CURD
+router.get('sort', '/article/sort/querySortList', ArticleController.querySortList) // 所有分类
+router.post('sort', '/article/sort/createSort', ArticleController.createSort) // 创建分类
 
 module.exports = router
