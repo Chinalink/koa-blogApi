@@ -2,23 +2,51 @@
  * @Description: 分类表
  * @Author: HuGang
  * @Date: 2020-07-25 13:27:16
- * @LastEditTime: 2020-07-25 16:39:21
+ * @LastEditTime: 2020-07-31 16:39:06
  */ 
 
 const { DataTypes } = require('sequelize');
-const sequelize = require('../lib/dbConn');
+const sequelize = require('../database/dbConn');
 
-const SortModel = sequelize.define('Sort', {
+const Sort = sequelize.define('Sort', {
   id: {
     type: DataTypes.INTEGER(11),
-    primaryKey: true,            // 主键
-    autoIncrement: true,         // 自动递增
+    primaryKey: true,                   // 主键
+    autoIncrement: true,                // 自动递增
   },
-  sort_name: DataTypes.STRING(50), // 分类名称
-  sort_alias: DataTypes.STRING(15), // 分类别名
-  sort_desc: DataTypes.STRING(200), // 分类描述
-  sort_num: DataTypes.INTEGER(11), // 当前分类下文章数目
-  sort_parentId: DataTypes.INTEGER(11) // 父分类ID
+  name: {                               // 分类名称
+    type: DataTypes.STRING(50),
+    field: 'sort_name',
+  },
+  alias: {                               // 分类别名
+    type: DataTypes.STRING(15),
+    field: 'sort_alias'
+  }, 
+  desc: {                               // 分类描述
+    type: DataTypes.STRING(200),
+    field: 'sort_desc',
+    defaultValue: ''
+  }, 
+  num: {                                // 当前分类下文章数目
+    type: DataTypes.INTEGER(11),
+    field: 'sort_num',
+    defaultValue: 0
+  }, 
+  parentId: {                           // 父分类ID
+    type: DataTypes.INTEGER(11),
+    field: 'sort_parent_id'
+  },
+  createdAt: {                          // 创建时间
+    type: DataTypes.DATE,
+    field: 'created_at'
+  },
+  updatedAt: {
+    type: DataTypes.DATE,               // 更新时间
+    field: 'updated_at'
+  }
+}, {
+  tableName: 'sort',
+  timestamps: true
 })
 
-module.exports = SortModel
+module.exports = Sort

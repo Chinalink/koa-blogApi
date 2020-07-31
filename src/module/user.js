@@ -2,10 +2,10 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:28:37
- * @LastEditTime: 2020-07-24 14:59:01
+ * @LastEditTime: 2020-07-31 16:55:18
  */ 
 const { DataTypes } = require('sequelize');
-const sequelize = require('../lib/dbConn');
+const sequelize = require('../database/dbConn');
 
 const UserModel = sequelize.define('User', {
   // 在这里定义模型属性
