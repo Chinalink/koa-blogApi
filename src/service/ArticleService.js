@@ -2,12 +2,12 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-07-31 18:17:30
+ * @LastEditTime: 2020-08-01 19:56:29
  */ 
 
 let HttpException = require('../utils/httpException');
-const { Op } = require("sequelize");
-let model = require('../module')
+const { Op, where } = require("sequelize");
+let model = require('../module');
 
 // 创建文章
 const SQLcreateArticle = async (params) => {
@@ -48,7 +48,7 @@ const _checkSort = async (params) => {
   const oneSort = await model.Sort.findOne({ where: { [Op.or]: queryOptions } })
   if (oneSort) {
     const msg = oneSort.name == params.name ? '已存在同名分类' : '已存在相同的分类别名'
-    throw HttpException.throwError(msg, 0, 400)
+    throw HttpException.throwError(msg, 4002)
   }
   return result
 }
@@ -59,16 +59,43 @@ const SQLcreateSort = async (params) => {
   if (!hasSort) {
     const newSort = await model.Sort.create(params)
     if (newSort instanceof model.Sort) {
-      return { code: 1, msg: '创建分类成功' }
+      return { code: 0, msg: '创建分类成功' }
     }
   }
   throw HttpException.throwError(hasSort.msg, hasSort.code)
 }
 
+// 更新分类
+const SQLupdateSort =async (params) => {
+  const sort = await model.Sort.findOne({ where: { id: params.id} })
+  if (sort instanceof model.Sort) {
+    const updateData = { name: params.name, desc: params.desc, alias: params.alias, parentId: params.parentId }
+    const result = await model.Sort.update(updateData, { where: { id: params.id } })
+    if(result[0] === 1)
+    return { code: 0, msg: '分类更新成功', data: null }
+  }
+}
+
+// 删除分类
+const SQLdeleteSort = async (params) => {
+  if(params.id) {
+    const sortChildren = await model.Sort.findAll({ where: { parentId: params.id } })
+
+    if(sortChildren.length > 0) {
+      throw HttpException.throwError('当前操作的分类存在子分类', 4005)
+    }
+
+    const result = await model.Sort.destroy({ where: { id: params.id } })
+    if(result === 1) {
+      return { code: 0, msg: '分类删除成功', data: null }
+    }
+  }
+}
+
 // 查询所有分类
 const SQLquerySortList = async () => {
   const allSort = await model.Sort.findAll()
-  return { code: 1, msg: '查询成功', data: allSort }
+  return { code: 0, msg: '查询成功', data: allSort }
 }
 
 
@@ -76,5 +103,7 @@ module.exports = {
   SQLcreateArticle,
   SQLqueryArticleList,
   SQLcreateSort,
+  SQLupdateSort,
+  SQLdeleteSort,
   SQLquerySortList
 }
