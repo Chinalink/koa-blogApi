@@ -2,7 +2,7 @@
  * @Description: 文章相关Controller
  * @Author: HuGang
  * @Date: 2020-07-31 15:13:17
- * @LastEditTime: 2020-08-01 19:48:15
+ * @LastEditTime: 2020-08-02 13:24:27
  */ 
 const HttpException = require('../utils/httpException');
 const Validation = require('../utils/validation');
@@ -15,6 +15,10 @@ const queryArticleList = async (ctx, next) => {
 }
 
 const createArticle = async (ctx, next) => {
+  const {title, content} = ctx.request.body
+  Validation.empty(title, '文章标题不能为空')
+  Validation.empty(content, '文章内容不能为空')
+
   const data = await ArticleService.SQLcreateArticle(ctx.request.body)
   return ctx.response.body = data
 }

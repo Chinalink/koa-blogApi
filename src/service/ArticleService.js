@@ -2,7 +2,7 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-01 19:56:29
+ * @LastEditTime: 2020-08-02 19:17:36
  */ 
 
 let HttpException = require('../utils/httpException');
@@ -14,9 +14,9 @@ const SQLcreateArticle = async (params) => {
   const newArticle = await model.Atricle.create(params)
 
   if (newArticle instanceof model.Atricle) {
-    const sorts = await model.Sort.findAll({ where: { id: params.sorts } })
+    const sorts = await model.Sort.findAll({ where: { id: params.category } })
     await newArticle.setSorts(sorts)
-    return { code: 1, msg: '创建文章成功' }
+    return { code: 0, msg: '创建文章成功' }
   }
   throw HttpException.throwError('错误', 4002)
 }
@@ -24,6 +24,7 @@ const SQLcreateArticle = async (params) => {
 // 查询所有文章 
 const SQLqueryArticleList = async () => {
   const allPost = await model.Atricle.findAll({
+    attributes: { exclude: ['timer'] },
     order: [
       ['createdAt', 'desc']
     ],

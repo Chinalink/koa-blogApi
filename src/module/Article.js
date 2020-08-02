@@ -2,9 +2,9 @@
  * @Description: 文章模型
  * @Author: HuGang
  * @Date: 2020-07-31 14:32:34
- * @LastEditTime: 2020-07-31 18:11:17
+ * @LastEditTime: 2020-08-02 14:19:11
  */ 
-
+const moment = require('moment');
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/dbConn');
 
@@ -31,6 +31,10 @@ const Article = sequelize.define('article', {
     type: DataTypes.INTEGER(11), 
     field: 'article_author'
   },
+  timer: {                              // 定时发布时间
+    type: DataTypes.DATE,
+    field: 'article_timer'
+  },
   status: {                             // 文章状态: 0:草稿、1:发布
     type: DataTypes.INTEGER(1),
     field: 'article_status',
@@ -52,11 +56,19 @@ const Article = sequelize.define('article', {
   },
   createdAt: {                          // 创建时间
     type: DataTypes.DATE,
-    field: 'created_at'
+    field: 'created_at',
+    get() {
+      const time = this.getDataValue('updatedAt')
+      return moment(time).format('YYYY-MM-DD HH:mm')
+    }
   },
   updatedAt: {
     type: DataTypes.DATE,               // 更新时间
-    field: 'updated_at'
+    field: 'updated_at',
+    get() {
+      const time = this.getDataValue('updatedAt')
+      return moment(time).format('YYYY-MM-DD HH:mm')
+    }
   }
 }, {
   tableName: 'article',
