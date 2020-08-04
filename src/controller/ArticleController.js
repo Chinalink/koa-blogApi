@@ -2,7 +2,7 @@
  * @Description: 文章相关Controller
  * @Author: HuGang
  * @Date: 2020-07-31 15:13:17
- * @LastEditTime: 2020-08-02 13:24:27
+ * @LastEditTime: 2020-08-04 22:25:18
  */ 
 const HttpException = require('../utils/httpException');
 const Validation = require('../utils/validation');
@@ -21,6 +21,10 @@ const createArticle = async (ctx, next) => {
 
   const data = await ArticleService.SQLcreateArticle(ctx.request.body)
   return ctx.response.body = data
+}
+
+const updateArticle = async (ctx, next) => {
+  
 }
 
 // 分类相关
@@ -73,6 +77,7 @@ const deleteSort = async (ctx, next) => {
 module.exports = {
   queryArticleList,
   createArticle,
+  updateArticle,
   querySortList,
   createSort,
   updateSort,
