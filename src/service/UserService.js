@@ -2,18 +2,16 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-07-31 16:54:24
+ * @LastEditTime: 2020-08-05 00:06:31
  */ 
 
  // sequelize
 https://github.com/demopark/sequelize-docs-Zh-CN/blob/master/core-concepts/getting-started.md
 
-// 查询
-var HttpException = require('../utils/httpException');
-var UserModel = require('../module/user');
+var model = require('../module');
 
-const checkUser = async (phone, password) => {
-  const searchOptions = { phone }
+const SQLuserLogin = async (user, password) => {
+  const searchOptions = { user, password }
   const oneUser = await UserModel.findAll({ where: searchOptions })
   if(oneUser.length) {
     return { code: 0, msg: "登陆成功", data: oneUser[0] }
@@ -22,20 +20,19 @@ const checkUser = async (phone, password) => {
   throw error
 }
 
-const createUser = async (phone, password) => {
-  const searchOptions = { phone }
-  const oneUser = await UserModel.findAll({ where: searchOptions })
-  if (oneUser.length) {
-    return { code: 2001, msg: "您注册的用户已存在", data: oneUser[0] }
+const SQLuserRegister = async (user, password) => {
+  const params = { user, password }
+  try {
+    const newUser = await model.User.create(params)
+    if(newUser instanceof model.User) {
+      throw new global.HttpErr.Success()
+    }
+  } catch (error) {
+    throw new global.HttpErr.ParameterException(error.errors[0].message)
   }
-  const newUser = await UserModel.create({ phone, password })
-  if (newUser instanceof UserModel) {
-    return { code: 0, msg: "注册成功" }
-  }
-  return { code: 500, msg: "内部错误" }
 }
 
 module.exports = {
-  checkUser,
-  createUser
+  SQLuserLogin,
+  SQLuserRegister
 }
