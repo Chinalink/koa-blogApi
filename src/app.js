@@ -2,25 +2,18 @@
  * @Description: 主模块
  * @Author: HuGang
  * @Date: 2019-12-02 13:28:14
- * @LastEditTime: 2020-08-02 14:14:28
+ * @LastEditTime: 2020-08-04 23:54:17
  */
 // 依赖库
 const Koa = require('koa')
-const cors = require('@koa/cors') // 用于开启跨域
-const bodyParser = require('koa-bodyparser') // 请求体解析中间件
+const InitManager = require('./utils/init');
 // 配置
 const sequelize = require('./database/dbConn'); // 数据库
-const catchError = require('./middlewares/catcherror'); // 全局错误处理
-const router = require('./router') // 路由
+
+
 
 const app = new Koa()
-
-// 注册中间件
-app
-  .use(catchError)
-  .use(cors())
-  .use(bodyParser())
-  .use(router.routes())
+InitManager.initCore(app)
 
 // 响应用户请求
 app.use((ctx) => {
