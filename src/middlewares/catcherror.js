@@ -2,20 +2,22 @@
  * @Description: 全局异常捕获
  * @Author: HuGang
  * @Date: 2020-07-22 10:54:12
- * @LastEditTime: 2020-07-31 16:53:45
+ * @LastEditTime: 2020-08-04 23:56:19
  */ 
-var HttpException = require('../utils/httpException');
+const { HttpException } = require('../utils/httpException');
 
 const catchError = async (ctx, next) => {
   try {
     await next()
   } catch (error) {
-    console.log(error)
-    if(error.code === 200) {
-      return ctx.body = { msg: error.msg, code: error.errCode }
+    const isHttpException = error instanceof HttpException
+    
+    if(isHttpException) {
+      ctx.status = error.code
+      ctx.body = { msg: error, code: error.errCode, data: null }
     } else {
-      ctx.body = { msg: error.msg, code: error.errCode }
-      return ctx.status = error.code
+      ctx.status = 500
+      ctx.body =  {msg: '未知异常', code: 999, data: null }
     }
   }
 }
