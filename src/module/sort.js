@@ -2,7 +2,7 @@
  * @Description: 分类表
  * @Author: HuGang
  * @Date: 2020-07-25 13:27:16
- * @LastEditTime: 2020-07-31 18:11:11
+ * @LastEditTime: 2020-08-05 18:18:15
  */ 
 
 const { DataTypes } = require('sequelize');
@@ -17,6 +17,15 @@ const Sort = sequelize.define('sort', {
   name: {                               // 分类名称
     type: DataTypes.STRING(50),
     field: 'sort_name',
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: "参数不合法"
+      },
+      notEmpty: {
+        msg: "分类名称不能为空"
+      }
+    }
   },
   alias: {                               // 分类别名
     type: DataTypes.STRING(15),

@@ -2,7 +2,7 @@
  * @Description: 文章相关Controller
  * @Author: HuGang
  * @Date: 2020-07-31 15:13:17
- * @LastEditTime: 2020-08-04 22:25:18
+ * @LastEditTime: 2020-08-05 18:18:42
  */ 
 const HttpException = require('../utils/httpException');
 const Validation = require('../utils/validation');
@@ -35,8 +35,6 @@ const querySortList = async (ctx, next) => {
 
 const createSort = async (ctx, next) => {
   const { name, parentId } = ctx.request.body
-
-  Validation.empty(name, '分类名称不能为空！')
 
   if (parentId) { // 父类ID不合法，默认为一级分类
     if (parentId === 'none' || typeof parentId !== 'number') {

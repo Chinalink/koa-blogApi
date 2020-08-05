@@ -2,12 +2,11 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-02 19:17:36
+ * @LastEditTime: 2020-08-05 18:19:58
  */ 
 
-let HttpException = require('../utils/httpException');
 const { Op, where } = require("sequelize");
-let model = require('../module');
+var model = require('../module');
 
 // 创建文章
 const SQLcreateArticle = async (params) => {
@@ -16,9 +15,8 @@ const SQLcreateArticle = async (params) => {
   if (newArticle instanceof model.Atricle) {
     const sorts = await model.Sort.findAll({ where: { id: params.category } })
     await newArticle.setSorts(sorts)
-    return { code: 0, msg: '创建文章成功' }
+    throw new global.HttpErr.Success('创建文章成功')
   }
-  throw HttpException.throwError('错误', 4002)
 }
 
 // 查询所有文章 
@@ -36,7 +34,7 @@ const SQLqueryArticleList = async () => {
       }
     ]
   })
-  return { code: 1, msg: '查询成功', data: allPost }
+  return { code: 0, msg: '查询成功', data: allPost }
 }
 
 // 判断分类是否存在或别名重复
@@ -49,7 +47,7 @@ const _checkSort = async (params) => {
   const oneSort = await model.Sort.findOne({ where: { [Op.or]: queryOptions } })
   if (oneSort) {
     const msg = oneSort.name == params.name ? '已存在同名分类' : '已存在相同的分类别名'
-    throw HttpException.throwError(msg, 4002)
+    throw global.HttpErr.Success(msg, 4002)
   }
   return result
 }
