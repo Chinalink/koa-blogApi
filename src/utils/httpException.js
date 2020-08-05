@@ -2,7 +2,7 @@
  * @Description: 常用异常类封装
  * @Author: HuGang
  * @Date: 2020-07-22 11:00:53
- * @LastEditTime: 2020-08-04 23:35:20
+ * @LastEditTime: 2020-08-05 22:16:33
  */ 
 
 class HttpException extends Error {
@@ -15,11 +15,12 @@ class HttpException extends Error {
 }
 
 class Success extends HttpException {
-  constructor(msg, errCode) {
+  constructor(msg, data, errCode) {
     super()
     this.code = 200
     this.msg = msg || '成功'
     this.errCode = errCode || 200
+    this.data = data || null
   }
 }
 
@@ -33,7 +34,7 @@ class ParameterException extends HttpException {
 }
 
 class AuthFaild extends HttpException {
-  constructor(msg) {
+  constructor(msg, errCode) {
     super()
     this.code = 401
     this.msg = msg || '认证失败'

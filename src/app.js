@@ -2,15 +2,13 @@
  * @Description: 主模块
  * @Author: HuGang
  * @Date: 2019-12-02 13:28:14
- * @LastEditTime: 2020-08-04 23:54:17
+ * @LastEditTime: 2020-08-05 11:11:43
  */
 // 依赖库
 const Koa = require('koa')
 const InitManager = require('./utils/init');
 // 配置
 const sequelize = require('./database/dbConn'); // 数据库
-
-
 
 const app = new Koa()
 InitManager.initCore(app)

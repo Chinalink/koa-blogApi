@@ -2,7 +2,7 @@
  * @Description: 全局异常捕获
  * @Author: HuGang
  * @Date: 2020-07-22 10:54:12
- * @LastEditTime: 2020-08-04 23:56:19
+ * @LastEditTime: 2020-08-05 22:21:48
  */ 
 const { HttpException } = require('../utils/httpException');
 
@@ -14,7 +14,7 @@ const catchError = async (ctx, next) => {
     
     if(isHttpException) {
       ctx.status = error.code
-      ctx.body = { msg: error, code: error.errCode, data: null }
+      ctx.body = { msg: error.msg, code: error.errCode, data: error.data || null }
     } else {
       ctx.status = 500
       ctx.body =  {msg: '未知异常', code: 999, data: null }
