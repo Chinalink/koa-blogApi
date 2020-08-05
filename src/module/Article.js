@@ -2,7 +2,7 @@
  * @Description: 文章模型
  * @Author: HuGang
  * @Date: 2020-07-31 14:32:34
- * @LastEditTime: 2020-08-02 14:19:11
+ * @LastEditTime: 2020-08-05 23:03:02
  */ 
 const moment = require('moment');
 const { DataTypes } = require('sequelize');
@@ -16,7 +16,16 @@ const Article = sequelize.define('article', {
   },
   title: {                              // 标题
     type: DataTypes.STRING(50),
-    field: 'article_title'
+    field: 'article_title',
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: "参数不合法"
+      },
+      notEmpty: {
+        msg: "标题不能为空"
+      }
+    }
   }, 
   excerpt: {                            // 文章摘要
     type: DataTypes.STRING(200),
@@ -25,7 +34,13 @@ const Article = sequelize.define('article', {
   },
   content: {                            // 文章内容
     type: DataTypes.TEXT('long'),
-    field: 'article_content'
+    field: 'article_content',
+    allowNull: false,
+    validate: {
+      notNull: {
+        msg: "参数不合法"
+      }
+    }
   },
   author: {                             // 作者ID
     type: DataTypes.INTEGER(11), 

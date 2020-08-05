@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:28:37
- * @LastEditTime: 2020-08-04 23:05:28
+ * @LastEditTime: 2020-08-05 23:04:41
  */ 
 const moment = require('moment');
+const utils = require('../utils/utils');
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/dbConn');
 
@@ -44,7 +45,8 @@ const UserModel = sequelize.define('user', {
   },
   niceName: {
     type: DataTypes.STRING(100), // 用户昵称
-    field: 'user_nick_name'
+    field: 'user_nick_name',
+    defaultValue: `用户${utils.randomString()}`
   },
   avatar: {
     type: DataTypes.STRING(255), // 用户头像
@@ -54,9 +56,9 @@ const UserModel = sequelize.define('user', {
     type: DataTypes.STRING(11), // 用户手机号
     field: 'user_phone'
   },
-  status: {
-    type: DataTypes.INTEGER(11), // 用户状态
-    field: 'user_status'
+  roles: {
+    type: DataTypes.INTEGER(11), // 用户权限
+    field: 'user_roles'
   },
   email: {
     type: DataTypes.STRING(255), // 用户邮箱
@@ -71,7 +73,7 @@ const UserModel = sequelize.define('user', {
         msg: "参数不合法"
       },
       notEmpty: {
-        msg: "密码不能为空"
+        msg: "Email不能为空"
       }
     }
   },
