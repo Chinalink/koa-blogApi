@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-05 13:45:33
+ * @LastEditTime: 2020-08-07 00:03:21
  */ 
 
  // sequelize
@@ -16,7 +16,7 @@ const SQLuserLogin = async (user, password) => {
   if(oneUser.length) {
     return { code: 0, msg: "登陆成功", data: oneUser[0] }
   }
-  const error = HttpException.throwError('用户名或密码错误', 2001, 401)
+  const error = global.ParameterException('用户名或密码错误')
   throw error
 }
 
@@ -25,10 +25,10 @@ const SQLuserRegister = async (user, password) => {
   try {
     const newUser = await model.User.create(params)
     if(newUser instanceof model.User) {
-      throw new global.HttpErr.Success()
+      return new global.Success().returnData()
     }
   } catch (error) {
-    throw new global.HttpErr.ParameterException(error.errors[0].message)
+    throw new global.ParameterException(error.errors[0].message)
   }
 }
 

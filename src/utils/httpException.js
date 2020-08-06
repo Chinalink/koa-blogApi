@@ -2,7 +2,7 @@
  * @Description: 常用异常类封装
  * @Author: HuGang
  * @Date: 2020-07-22 11:00:53
- * @LastEditTime: 2020-08-05 22:16:33
+ * @LastEditTime: 2020-08-07 00:03:51
  */ 
 
 class HttpException extends Error {
@@ -11,6 +11,10 @@ class HttpException extends Error {
     this.msg = msg
     this.code = code
     this.errCode = errCode
+  }
+
+  returnData() {
+    return { msg: this.msg, code: this.errCode, data: this.data }
   }
 }
 

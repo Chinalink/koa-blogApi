@@ -2,7 +2,7 @@
  * @Description: 鉴权校验中间件
  * @Author: HuGang
  * @Date: 2020-08-05 18:02:37
- * @LastEditTime: 2020-08-05 18:28:15
+ * @LastEditTime: 2020-08-06 23:48:00
  */
 const Auth = require('../utils/auth');
 
@@ -24,7 +24,7 @@ const authorize = async (ctx, next) => {
   }
 
   // 权限判断
-  if (tokenData.scope < this.level) {
+  if (tokenData.roles < this.level) {
     throw new global.AuthFaild('权限不足')
   }
 
