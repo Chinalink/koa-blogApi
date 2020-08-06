@@ -2,18 +2,23 @@
  * @Description: 鉴权管理
  * @Author: HuGang
  * @Date: 2020-08-05 12:32:45
- * @LastEditTime: 2020-08-05 18:24:48
+ * @LastEditTime: 2020-08-07 01:25:48
  */
 const jwt = require('jsonwebtoken')
 
 class Auth {
-  constructor(level) {
+  constructor() {
+    this.secretKey = 'XdyCxM'
+  }
 
+  static createToken(uid, roles) {
+    const token = jwt.sign({uid, roles}, this.secretKey, {expiresIn: '2h'})
+    return token
   }
 
   static verifyToken(token) {
     try {
-      jwt.verify(token, secretKey)
+      jwt.verify(token, this.secretKey)
       return true
     } catch (error) {
       return false

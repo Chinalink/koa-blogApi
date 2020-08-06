@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:28:37
- * @LastEditTime: 2020-08-05 23:04:41
+ * @LastEditTime: 2020-08-07 00:57:33
  */ 
 const moment = require('moment');
 const utils = require('../utils/utils');
@@ -13,6 +13,7 @@ const UserModel = sequelize.define('user', {
   // 在这里定义模型属性
   id: {
     type: DataTypes.INTEGER(11),
+    field: 'user_id',
     primaryKey: true,            // 主键
     autoIncrement: true,         // 自动递增
   },
@@ -94,7 +95,7 @@ const UserModel = sequelize.define('user', {
     }
   }
 }, {
-  tableName: 'user',
+  tableName: 'users',
   timestamps: true
 })
 

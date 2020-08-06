@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:43:13
- * @LastEditTime: 2020-07-31 17:05:54
+ * @LastEditTime: 2020-08-07 01:01:35
  */ 
 // const sequelize = require('./dbConn');
 // sequelize.sync({force: true})
@@ -13,9 +13,9 @@ const articleSort = require('../module/ArticleSort')
 
 const allModel = [
   user,
-  sort,
-  article,
-  articleSort
+  // sort,
+  // article,
+  // articleSort
 ]
 
 allModel.forEach((item) => {

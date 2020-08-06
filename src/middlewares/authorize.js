@@ -2,7 +2,7 @@
  * @Description: 鉴权校验中间件
  * @Author: HuGang
  * @Date: 2020-08-05 18:02:37
- * @LastEditTime: 2020-08-06 23:48:00
+ * @LastEditTime: 2020-08-07 01:25:27
  */
 const Auth = require('../utils/auth');
 
@@ -15,7 +15,7 @@ const authorize = async (ctx, next) => {
   }
 
   try {
-    tokenData = jwt.verify(token, secretKey)
+    tokenData = Auth.verifyToken(token)
   } catch (error) {
     if (error.name === 'TokenExpiredError') {
       throw new global.AuthFaild('签名已过期，请重新登录')
