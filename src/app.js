@@ -2,7 +2,7 @@
  * @Description: 主模块
  * @Author: HuGang
  * @Date: 2019-12-02 13:28:14
- * @LastEditTime: 2020-08-05 11:11:43
+ * @LastEditTime: 2020-08-07 00:08:31
  */
 // 依赖库
 const Koa = require('koa')
@@ -15,7 +15,7 @@ InitManager.initCore(app)
 
 // 响应用户请求
 app.use((ctx) => {
-  console.log("404 Not Found")
+  throw new global.NotFound()
 });
 
 // 数据库建连
