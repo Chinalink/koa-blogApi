@@ -2,7 +2,7 @@
  * @Description: 全局异常捕获
  * @Author: HuGang
  * @Date: 2020-07-22 10:54:12
- * @LastEditTime: 2020-08-06 23:48:45
+ * @LastEditTime: 2020-08-07 00:10:10
  */ 
 const { HttpException } = require('../utils/httpException');
 
@@ -10,6 +10,7 @@ const catchError = async (ctx, next) => {
   try {
     await next()
   } catch (error) {
+    console.log(error)
     const isHttpException = error instanceof HttpException
     
     if(isHttpException) {

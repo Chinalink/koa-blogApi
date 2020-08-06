@@ -2,7 +2,7 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-07 00:03:00
+ * @LastEditTime: 2020-08-07 00:11:51
  */ 
 
 const { Op, where } = require("sequelize");
@@ -35,7 +35,8 @@ class ArticleService {
 
       const result = await model.Sort.destroy({ where: { id: params.id } })
       if (result === 1) {
-        return new global.Success('分类删除成功', allSort).resultData()
+        console.log(new global.Success('分类删除成功', allSort))
+        return new global.Success('分类删除成功', allSort).returnData()
       }
     }
   }
@@ -47,14 +48,14 @@ class ArticleService {
       const updateData = { name: params.name, desc: params.desc, alias: params.alias, parentId: params.parentId }
       const result = await model.Sort.update(updateData, { where: { id: params.id } })
       if (result[0] === 1)
-        return new global.Success('分类更新成功', allSort).resultData()
+        return new global.Success('分类更新成功', allSort).returnData()
     }
   }
 
   // 查询所有分类
   static async SQLquerySortList() {
     const allSort = await model.Sort.findAll()
-    return new global.Success('查询成功', allSort).resultData()
+    return new global.Success('查询成功', allSort).returnData()
   }
 
   // 判断分类是否存在或别名重复
@@ -86,7 +87,7 @@ class ArticleService {
       if (newArticle instanceof model.Atricle) {
         const sorts = await model.Sort.findAll({ where: { id: params.category } })
         await newArticle.setSorts(sorts)
-        return new global.Success('创建文章成功').resultData()
+        return new global.Success('创建文章成功').returnData()
       }
     } catch (error) {
       console.log(error)
@@ -106,7 +107,7 @@ class ArticleService {
         }
       ]
     })
-    return new global.Success('查询成功', allPost).resultData()
+    return new global.Success('查询成功', allPost).returnData()
   }
 }
 

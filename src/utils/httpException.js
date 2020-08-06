@@ -2,7 +2,7 @@
  * @Description: 常用异常类封装
  * @Author: HuGang
  * @Date: 2020-07-22 11:00:53
- * @LastEditTime: 2020-08-07 00:03:51
+ * @LastEditTime: 2020-08-07 00:12:26
  */ 
 
 class HttpException extends Error {
@@ -23,7 +23,7 @@ class Success extends HttpException {
     super()
     this.code = 200
     this.msg = msg || '成功'
-    this.errCode = errCode || 200
+    this.errCode = errCode || 0
     this.data = data || null
   }
 }

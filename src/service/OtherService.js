@@ -32,7 +32,7 @@ class OtherService {
       const newUser = await Model.User.create(params)
       if (newUser instanceof Model.User) {
         const bodyData = new global.Success('注册成功')
-        return bodyData.resultData()
+        return bodyData.returnData()
       }
     } catch (error) {
       throw new global.ParameterException(error.errors[0].message)
