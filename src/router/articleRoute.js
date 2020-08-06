@@ -2,12 +2,12 @@
  * @Description: 文章相关Api
  * @Author: HuGang
  * @Date: 2020-07-25 13:34:43
- * @LastEditTime: 2020-08-05 22:39:32
+ * @LastEditTime: 2020-08-05 23:06:32
  */ 
 
 const Router = require('@koa/router')
 const Authorize = require('../middlewares/authorize');
-const ArticleController = require('../controller/ArticleController');
+const ArticleController = require('../controller/articleController');
 
 const router = new Router({ prefix: '/article' })
 
