@@ -2,16 +2,17 @@
  * @Description: 中间件加载
  * @Author: HuGang
  * @Date: 2020-08-04 23:47:11
- * @LastEditTime: 2020-08-05 18:27:40
+ * @LastEditTime: 2020-08-07 14:18:06
  */
 const cors = require('@koa/cors') // 用于开启跨域
 const bodyParser = require('koa-bodyparser') // 请求体解析中间件
-// const jwt = require('koa-jwt'); // 路由鉴权
 const router = require('../router') // 路由
 const catchError = require('../middlewares/catcherror'); // 全局错误处理
-const errors = require('./httpException');
+const errors = require('./httpException');  // 常用错误类
+const sequelize = require('../database/dbConn'); // 数据库
 
 class InitManager  {
+
   static initCore(app) {
     InitManager.app = app
     InitManager.loadMiddlewares()
@@ -37,6 +38,16 @@ class InitManager  {
     global.Success = errors.Success
   }
 
+  static loadSequelize() {
+    // 数据库建连
+    sequelize.authenticate().then(() => {
+      console.log('*****数据库连接成功，─=≡Σ(((つ•̀ω•́)つ*****');
+    }).catch(err => {
+      console.error('Failed', err);
+    });
+  }
+
+  static 
 }
 
 module.exports = InitManager

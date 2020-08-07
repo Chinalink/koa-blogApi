@@ -2,27 +2,19 @@
  * @Description: 主模块
  * @Author: HuGang
  * @Date: 2019-12-02 13:28:14
- * @LastEditTime: 2020-08-07 00:08:31
+ * @LastEditTime: 2020-08-07 14:17:51
  */
 // 依赖库
 const Koa = require('koa')
 const InitManager = require('./utils/init');
-// 配置
-const sequelize = require('./database/dbConn'); // 数据库
 
 const app = new Koa()
 InitManager.initCore(app)
+InitManager.loadSequelize()
 
 // 响应用户请求
 app.use((ctx) => {
   throw new global.NotFound()
-});
-
-// 数据库建连
-sequelize.authenticate().then(() => {
-  console.log('*****数据库连接成功，─=≡Σ(((つ•̀ω•́)つ*****');
-}).catch(err => {
-  console.error('Failed', err);
 });
 
 // 监听端口启动http服务
