@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-08-07 13:13:06
- * @LastEditTime: 2020-08-07 13:22:25
+ * @LastEditTime: 2020-08-07 15:18:42
  */
 const moment = require('moment');
 const { DataTypes } = require('sequelize');
@@ -16,7 +16,7 @@ const Roles = sequelize.define('roles', {
     field: 'roles_id'
   },
   name: {
-    type: DataTypes.INTEGER(11),
+    type: DataTypes.STRING(50),
     field: 'roles_name'
   },
   createdAt: { // 创建时间

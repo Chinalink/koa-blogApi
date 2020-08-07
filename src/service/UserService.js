@@ -2,12 +2,11 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-07 14:23:28
+ * @LastEditTime: 2020-08-07 17:53:26
  */ 
 
  // sequelize
 https://github.com/demopark/sequelize-docs-Zh-CN/blob/master/core-concepts/getting-started.md
-var jwt = require('jsonwebtoken');
 var model = require('../model');
 
 const SQLuserLogin = async (user, password) => {

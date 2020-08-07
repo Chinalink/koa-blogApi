@@ -2,9 +2,10 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:28:37
- * @LastEditTime: 2020-08-07 13:21:15
+ * @LastEditTime: 2020-08-07 18:00:44
  */ 
 const moment = require('moment');
+const bcrypt = require('bcrypt')
 const utils = require('../utils/utils');
 const { DataTypes } = require('sequelize');
 const sequelize = require('../database/dbConn');
@@ -42,6 +43,9 @@ const UserModel = sequelize.define('user', {
       notEmpty: {
         msg: "密码不能为空"
       }
+    },
+    set (value) {
+      this.setDataValue('password', bcrypt.hashSync(value, 10));
     }
   },
   niceName: {

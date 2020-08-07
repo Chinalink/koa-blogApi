@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-31 16:14:36
- * @LastEditTime: 2020-08-07 13:41:40
+ * @LastEditTime: 2020-08-07 18:24:04
  */ 
 const fs = require('fs');
 let Model = {}
@@ -26,16 +26,8 @@ Model.Sort.belongsToMany(Model.Article, {
   otherKey: 'articleId'
 })
 
-Model.User.belongsToMany(Model.Roles, {
-  through: Model.UserRoles,
-  foreignKey: 'userId',
-  otherKey: 'rolesId'
-})
+Model.Roles.hasMany(Model.User, { foreignKey: 'roles' })
+Model.User.belongsTo(Model.Roles, { foreignKey: 'roles' });
 
-Model.Roles.belongsToMany(Model.User, {
-  through: Model.UserRoles,
-  foreignKey: 'rolesId',
-  otherKey: 'userId'
-})
 
 module.exports = Model
