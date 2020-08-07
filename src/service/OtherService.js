@@ -7,7 +7,7 @@
 
  // sequelize
 https://github.com/demopark/sequelize-docs-Zh-CN/blob/master/core-concepts/getting-started.md
-var Model = require('../module');
+var Model = require('../model');
 var Auth = require('../utils/auth')
 
 class OtherService {

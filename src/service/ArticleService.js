@@ -2,11 +2,11 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-07 00:11:51
+ * @LastEditTime: 2020-08-07 14:23:19
  */ 
 
 const { Op, where } = require("sequelize");
-var model = require('../module');
+var model = require('../model');
 
 class ArticleService {
   // 创建分类
