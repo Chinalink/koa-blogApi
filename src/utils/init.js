@@ -2,7 +2,7 @@
  * @Description: 中间件加载
  * @Author: HuGang
  * @Date: 2020-08-04 23:47:11
- * @LastEditTime: 2020-08-07 22:45:17
+ * @LastEditTime: 2020-08-09 00:41:13
  */
 const cors = require('@koa/cors') // 用于开启跨域
 const bodyParser = require('koa-bodyparser') // 请求体解析中间件
@@ -46,7 +46,7 @@ class InitManager  {
       console.error('Failed', err);
     });
   }
-
+  
 }
 
 module.exports = InitManager
