@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:28:37
- * @LastEditTime: 2020-08-07 18:00:44
+ * @LastEditTime: 2020-08-08 15:34:27
  */ 
 const moment = require('moment');
 const bcrypt = require('bcrypt')
@@ -48,7 +48,7 @@ const UserModel = sequelize.define('user', {
       this.setDataValue('password', bcrypt.hashSync(value, 10));
     }
   },
-  niceName: {
+  nickName: {
     type: DataTypes.STRING(100), // 用户昵称
     field: 'user_nick_name',
     defaultValue: `用户${utils.randomString()}`
@@ -77,6 +77,10 @@ const UserModel = sequelize.define('user', {
         msg: "Email不能为空"
       }
     }
+  },
+  roles: {
+    type: DataTypes.INTEGER(11),
+    field: 'user_role',
   },
   createdAt: { // 创建时间
     type: DataTypes.DATE,
