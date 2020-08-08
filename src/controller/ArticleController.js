@@ -2,9 +2,9 @@
  * @Description: 文章相关Controller
  * @Author: HuGang
  * @Date: 2020-07-31 15:13:17
- * @LastEditTime: 2020-08-07 01:27:31
+ * @LastEditTime: 2020-08-08 23:59:13
  */ 
-const Validation = require('../utils/validation');
+const Validation = require('../utils/validation')
 const ArticleService = require('../service/ArticleService');
 
 class ArticleController {
@@ -39,12 +39,11 @@ class ArticleController {
   }
 
   static async deleteSort(ctx, next) {
-    console.log(ctx)
-    // const { id } = ctx.request
-    // Validation.isImpty(id, '请求参数错误')
+    const { id } = ctx.params
+    Validation.isEmpty(id, '请求参数错误')
 
-    // const data = await ArticleService.SQLdeleteSort(ctx.request.query)
-    // return ctx.response.body = data
+    const data = await ArticleService.SQLdeleteSort(ctx.params)
+    return ctx.response.body = data
   }
 
   static async updateSort(ctx, next) {

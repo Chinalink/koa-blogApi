@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:56:11
- * @LastEditTime: 2020-08-08 16:32:51
+ * @LastEditTime: 2020-08-08 16:51:53
  */
 const OtherService = require('../service/OtherService');
 const Validation = require('../utils/validation')
@@ -12,8 +12,7 @@ class OtherController {
     const { user, password } = ctx.request.body
     Validation.isEmpty(user, '用户名不能为空')
     Validation.isEmpty(password, '密码不能为空')
-    const data = await OtherService.SQLlogin(user, password)
-    return ctx.response.body = data
+    await OtherService.SQLlogin(user, password)
   }
 
   static async register(ctx, next) {
