@@ -2,7 +2,7 @@
  * @Description: 鉴权校验中间件
  * @Author: HuGang
  * @Date: 2020-08-05 18:02:37
- * @LastEditTime: 2020-08-07 01:25:27
+ * @LastEditTime: 2020-08-08 18:12:08
  */
 const Auth = require('../utils/auth');
 
@@ -20,7 +20,6 @@ const authorize = async (ctx, next) => {
     if (error.name === 'TokenExpiredError') {
       throw new global.AuthFaild('签名已过期，请重新登录')
     }
-    console.log(error)
   }
 
   // 权限判断
