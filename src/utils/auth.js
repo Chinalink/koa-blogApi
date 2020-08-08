@@ -2,14 +2,14 @@
  * @Description: 鉴权管理
  * @Author: HuGang
  * @Date: 2020-08-05 12:32:45
- * @LastEditTime: 2020-08-08 18:20:16
+ * @LastEditTime: 2020-08-08 18:21:43
  */
 const jwt = require('jsonwebtoken')
 const secretKey = 'XdyCxM'
 class Auth {
 
   static createToken(uid, roles) {
-    const token = jwt.sign({ uid, roles }, secretKey, { expiresIn: 10 })
+    const token = jwt.sign({ uid, roles }, secretKey, { expiresIn: 60 * 60 * 2 })
     return token
   }
 
