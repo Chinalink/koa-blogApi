@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:28:37
- * @LastEditTime: 2020-08-08 15:34:27
+ * @LastEditTime: 2020-08-09 18:05:44
  */ 
 const moment = require('moment');
 const bcrypt = require('bcrypt')
@@ -57,9 +57,17 @@ const UserModel = sequelize.define('user', {
     type: DataTypes.STRING(255), // 用户头像
     field: 'user_avatar'
   },
-  phone: {
-    type: DataTypes.STRING(11), // 用户手机号
-    field: 'user_phone'
+  qq: {
+    type: DataTypes.STRING(255), // qq
+    field: 'user_qq'
+  },
+  wechat: {
+    type: DataTypes.STRING(255), // 微信
+    field: 'user_wechat'
+  },
+  github: {
+    type: DataTypes.STRING(255), // github
+    field: 'user_github'
   },
   email: {
     type: DataTypes.STRING(255), // 用户邮箱
@@ -77,6 +85,11 @@ const UserModel = sequelize.define('user', {
         msg: "Email不能为空"
       }
     }
+  },
+  introduce: {
+    type: DataTypes.STRING(255), // 个人说明
+    field: 'user_introduce',
+    defaultValue: ''
   },
   roles: {
     type: DataTypes.INTEGER(11),
