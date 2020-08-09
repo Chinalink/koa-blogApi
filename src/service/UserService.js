@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-09 00:36:08
+ * @LastEditTime: 2020-08-09 19:25:21
  */ 
 
  // sequelize
@@ -20,10 +20,7 @@ class UserService {
       throw new global.Success(error)
     }
   }
-  // 查询单个用户 
-  static async SQLfindUser() {
-    
-  }
+
   // 查询用户列表
   static async SQLqueryUsers() {
     try {
@@ -41,6 +38,31 @@ class UserService {
       return new global.Success('查询成功', userList).returnData()
     } catch (error) {
       throw new global.Success(error)
+    }
+  }
+
+  // 查询用户信息 
+  static async SQLqueryUserInfo(params) {
+    if (params.id === 1) {
+      throw new global.Success('用户不存在', null)
+    }
+    const result = await Model.User.findOne({ 
+      where: params,
+      attributes: { exclude: ['password'] },
+    })
+    if(result) {
+      return new global.Success('查询成功', result).returnData()
+    }
+    return new global.Success('用户不存在', null).returnData()
+  }
+
+  // 更新用户信息
+  static async SQLqueryUserUpdate(params, uid) {
+    const result = await Model.User.update(params, {
+      where: { id: uid }
+    });
+    if(result) {
+      return new global.Success('操作成功').returnData()
     }
   }
 }
