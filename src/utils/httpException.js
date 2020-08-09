@@ -2,7 +2,7 @@
  * @Description: 常用异常类封装
  * @Author: HuGang
  * @Date: 2020-07-22 11:00:53
- * @LastEditTime: 2020-08-07 00:12:26
+ * @LastEditTime: 2020-08-09 19:02:39
  */ 
 
 class HttpException extends Error {
@@ -41,8 +41,8 @@ class AuthFaild extends HttpException {
   constructor(msg, errCode) {
     super()
     this.code = 401
-    this.msg = msg || '认证失败'
-    this.errCode = errCode || 1004
+    this.msg = msg || '请求认证失败'
+    this.errCode = errCode || 1001
   }
 }
 
