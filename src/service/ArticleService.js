@@ -2,7 +2,7 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-08 23:56:54
+ * @LastEditTime: 2020-08-09 15:55:58
  */ 
 
 const { Op, where } = require("sequelize");
@@ -77,9 +77,9 @@ class ArticleService {
   // 创建文章
   static async SQLcreateArticle(params) {
     try {
-      const newArticle = await Model.Atricle.create(params)
+      const newArticle = await Model.Article.create(params)
 
-      if (newArticle instanceof Model.Atricle) {
+      if (newArticle instanceof Model.Article) {
         const sorts = await Model.Sort.findAll({ where: { id: params.category } })
         await newArticle.setSorts(sorts)
         return new global.Success('创建文章成功').returnData()
@@ -90,10 +90,16 @@ class ArticleService {
   }
 
   // 查询所有文章 
-  static async SQLqueryArticleList() {
-    const allPost = await Model.Atricle.findAll({
+  static async SQLqueryArticleList(query) {
+
+    const { count, rows } = await Model.Article.findAndCountAll({
+      // limit: query.pageSize,
+      // offset: (query.current - 1) * query.pageSize,
       attributes: { exclude: ['timer'] },
-      order: [ ['createdAt', 'desc'] ],
+      order: [['createdAt', 'desc']],
+      // where: {
+      //   title: { [Op.like]: '%foo%' }
+      // },
       include: [
         {
           model: Model.Sort,
@@ -101,8 +107,11 @@ class ArticleService {
           through: { attributes: [] }
         }
       ]
-    })
-    return new global.Success('查询成功', allPost).returnData()
+    });
+    const result = { results: rows, total: count }
+    console.log(count)
+    console.log(rows)
+    return new global.Success('查询成功', result).returnData()
   }
 }
 

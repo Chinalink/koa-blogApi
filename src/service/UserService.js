@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-09 19:25:21
+ * @LastEditTime: 2020-08-09 19:45:04
  */ 
 
  // sequelize
@@ -58,11 +58,15 @@ class UserService {
 
   // 更新用户信息
   static async SQLqueryUserUpdate(params, uid) {
-    const result = await Model.User.update(params, {
-      where: { id: uid }
-    });
-    if(result) {
-      return new global.Success('操作成功').returnData()
+    try {
+      const result = await Model.User.update(params, {
+        where: { id: uid }
+      });
+      if (result) {
+        return new global.Success('操作成功').returnData()
+      }
+    } catch (error) {
+      throw new global.ParameterException(error.errors[0].message)
     }
   }
 }

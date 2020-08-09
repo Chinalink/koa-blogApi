@@ -2,7 +2,7 @@
  * @Description: 文章相关Controller
  * @Author: HuGang
  * @Date: 2020-07-31 15:13:17
- * @LastEditTime: 2020-08-08 23:59:13
+ * @LastEditTime: 2020-08-09 15:49:10
  */ 
 const Validation = require('../utils/validation')
 const ArticleService = require('../service/ArticleService');
@@ -21,9 +21,14 @@ class ArticleController {
   static async updateArticle(ctx, next) {
 
   }
-
+  // 查询文章列表
   static async queryArticleList(ctx, next) {
-    const data = await ArticleService.SQLqueryArticleList()
+    const { pageSize = 20, current = 1 } = ctx.request.query
+    const query = {
+      pageSize,
+      current
+    }
+    const data = await ArticleService.SQLqueryArticleList(query)
     return ctx.response.body = data
   }
   // 分类相关

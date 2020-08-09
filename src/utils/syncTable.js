@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:43:13
- * @LastEditTime: 2020-08-07 14:27:38
+ * @LastEditTime: 2020-08-09 16:50:12
  */ 
 
 const fs = require('fs');
@@ -18,5 +18,5 @@ fs.readdirSync(pathName).forEach(file => {
 })
 
 Model.forEach((item) => {
-  item.sync({ force: true }) // 强制同步，先删除表，然后新建
+  item.sync({ alter: false }) // 强制同步，先删除表，然后新建
 })
