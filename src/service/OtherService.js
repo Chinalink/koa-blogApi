@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-08 23:44:05
+ * @LastEditTime: 2020-08-10 23:25:13
  */ 
 
  // sequelize
@@ -19,7 +19,7 @@ class OtherService {
     if (oneUser) {
       if (bcrypt.compareSync(password, oneUser.password)) {
         const token = Auth.createToken(oneUser.id, oneUser.roles)
-        throw new global.Success('登陆成功', { token: token })
+        throw new global.Success('登陆成功', { token: token, uid: oneUser.id, name: oneUser.nickName, avatar: oneUser.avatar })
       } else {
         throw new global.ParameterException('用户名或密码错误')
       }
