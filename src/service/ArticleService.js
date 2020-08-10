@@ -2,7 +2,7 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-09 15:55:58
+ * @LastEditTime: 2020-08-10 23:55:13
  */ 
 
 const { Op, where } = require("sequelize");
@@ -91,10 +91,9 @@ class ArticleService {
 
   // 查询所有文章 
   static async SQLqueryArticleList(query) {
-
     const { count, rows } = await Model.Article.findAndCountAll({
-      // limit: query.pageSize,
-      // offset: (query.current - 1) * query.pageSize,
+      limit: query.pageSize,
+      offset: (query.current - 1) * query.pageSize,
       attributes: { exclude: ['timer'] },
       order: [['createdAt', 'desc']],
       // where: {
@@ -104,13 +103,12 @@ class ArticleService {
         {
           model: Model.Sort,
           attributes: ['id', 'name'],
+          duplicating: false,
           through: { attributes: [] }
         }
       ]
     });
-    const result = { results: rows, total: count }
-    console.log(count)
-    console.log(rows)
+    const result = { result: rows, total: count }
     return new global.Success('查询成功', result).returnData()
   }
 }

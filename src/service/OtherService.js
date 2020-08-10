@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-10 23:25:13
+ * @LastEditTime: 2020-08-10 23:31:01
  */ 
 
  // sequelize
@@ -19,7 +19,7 @@ class OtherService {
     if (oneUser) {
       if (bcrypt.compareSync(password, oneUser.password)) {
         const token = Auth.createToken(oneUser.id, oneUser.roles)
-        throw new global.Success('登陆成功', { token: token, uid: oneUser.id, name: oneUser.nickName, avatar: oneUser.avatar })
+        throw new global.Success('登陆成功', { token: token, uid: oneUser.id, name: oneUser.nickName, avatar: 'https://himg.bdimg.com/sys/portraitn/item/e604a966bafbb5fba091bba8d7ed6d1b' })
       } else {
         throw new global.ParameterException('用户名或密码错误')
       }
