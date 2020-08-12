@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:28:37
- * @LastEditTime: 2020-08-09 18:05:44
+ * @LastEditTime: 2020-08-12 19:40:24
  */ 
 const moment = require('moment');
 const bcrypt = require('bcrypt')
@@ -99,7 +99,7 @@ const UserModel = sequelize.define('user', {
     type: DataTypes.DATE,
     field: 'created_at',
     get() {
-      const time = this.getDataValue('updatedAt')
+      const time = this.getDataValue('createdAt')
       return moment(time).format('YYYY-MM-DD HH:mm')
     }
   },
