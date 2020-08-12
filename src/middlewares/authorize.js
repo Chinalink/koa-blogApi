@@ -2,7 +2,7 @@
  * @Description: 鉴权校验中间件
  * @Author: HuGang
  * @Date: 2020-08-05 18:02:37
- * @LastEditTime: 2020-08-09 19:02:08
+ * @LastEditTime: 2020-08-12 22:55:41
  */
 const Auth = require('../utils/auth');
 
@@ -21,11 +21,7 @@ const authorize = async (ctx, next) => {
       throw new global.AuthFaild('签名已过期，请重新登录', 1002)
     }
   }
-
-  // 权限判断
-  // if (tokenData.roles < this.level) {
-  //   throw new global.AuthFaild('权限不足')
-  // }
+  
   ctx.tokenData = tokenData
   await next()
 }

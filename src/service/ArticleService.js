@@ -2,7 +2,7 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-10 23:55:13
+ * @LastEditTime: 2020-08-12 23:16:47
  */ 
 
 const { Op, where } = require("sequelize");
@@ -26,7 +26,6 @@ class ArticleService {
 
   // 删除分类
   static async SQLdeleteSort(params) {
-    console.log(params.id)
     if (params.id) {
       const sortChildren = await Model.Sort.findAll({ where: { parentId: params.id } })
 
@@ -36,8 +35,9 @@ class ArticleService {
 
       const result = await Model.Sort.destroy({ where: { id: params.id } })
       if (result === 1) {
-        return new global.Success('分类删除成功', allSort).returnData()
+        return new global.Success('分类删除成功').returnData()
       }
+      
     }
   }
 
@@ -48,7 +48,7 @@ class ArticleService {
       const updateData = { name: params.name, desc: params.desc, alias: params.alias, parentId: params.parentId }
       const result = await Model.Sort.update(updateData, { where: { id: params.id } })
       if (result[0] === 1) {
-        return new global.Success('分类更新成功', allSort).returnData()
+        return new global.Success('分类更新成功').returnData()
       }
     }
   }
