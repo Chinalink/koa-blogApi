@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:56:11
- * @LastEditTime: 2020-08-09 19:27:49
+ * @LastEditTime: 2020-08-12 19:37:12
  */ 
 const Validation = require('../utils/validation')
 const UserService = require('../service/UserService');
@@ -16,7 +16,16 @@ class UserController {
 
   // 查询用户列表
   static async userList(ctx, next) {
-    const data = await UserService.SQLqueryUsers()
+    const { pageSize = 20, current = 1, nickName = '', email = '' } = ctx.request.query
+
+    const query = {
+      pageSize: +pageSize,
+      current: +current,
+      nickName,
+      email
+    }
+
+    const data = await UserService.SQLqueryUsers(query)
     return ctx.response.body = data
   }
   
@@ -32,7 +41,6 @@ class UserController {
 
   // 更新用户信息
   static async userUpdate(ctx, next) {
-    console.log(ctx.request.body)
     const uid = ctx.tokenData.uid
     if (!ctx.params.id) {
       throw new global.ParameterException('请求参数错误')
@@ -45,6 +53,18 @@ class UserController {
     const params = ctx.request.body
     delete params.user
     const data = await UserService.SQLqueryUserUpdate(params, ctx.params.id)
+    return ctx.response.body = data
+  }
+
+  // 删除用户信息
+  static async userDelete(ctx, next) {
+    const uid = ctx.tokenData.uid
+    console.log(ctx.params)
+    if (!ctx.params.id) {
+      throw new global.ParameterException('请求参数错误')
+    }
+    Validation.isAdmin(uid)
+    const data = await UserService.SQLqueryUserDelete(ctx.params.id)
     return ctx.response.body = data
   }
 }
