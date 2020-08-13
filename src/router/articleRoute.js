@@ -2,7 +2,7 @@
  * @Description: 文章相关Api
  * @Author: HuGang
  * @Date: 2020-07-25 13:34:43
- * @LastEditTime: 2020-08-12 22:55:24
+ * @LastEditTime: 2020-08-13 23:54:23
  */ 
 
 const Router = require('@koa/router')
@@ -20,5 +20,9 @@ router
   .delete('/article/sort/:id', Authorize, ArticleController.deleteSort) // 删除分类
   .put('/article/sort/:id', Authorize, ArticleController.updateSort) // 更新分类
   .get('/article/sort', Authorize, ArticleController.querySortList) // 获取分类列表
+  .post('/article/tag', Authorize, ArticleController.createTag) // 创建分类
+  .delete('/article/tag/:id', Authorize, ArticleController.deleteTag) // 删除分类
+  .put('/article/tag/:id', Authorize, ArticleController.updateTag) // 更新分类
+  .get('/article/tag', Authorize, ArticleController.queryTagList) // 获取分类列表
 
 module.exports = router

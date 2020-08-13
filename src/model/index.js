@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-31 16:14:36
- * @LastEditTime: 2020-08-07 23:57:05
+ * @LastEditTime: 2020-08-13 22:48:24
  */ 
 const fs = require('fs');
 let Model = {}
@@ -13,7 +13,7 @@ fs.readdirSync(__dirname).forEach(file => {
   Model[fileName] = require(`./${file}`)
 })
 
-// 建立关联关系
+// 文章 & 分类 多对多关联
 Model.Article.belongsToMany(Model.Sort, {
   through: Model.ArticleSort,
   foreignKey: 'articleId',
@@ -26,6 +26,21 @@ Model.Sort.belongsToMany(Model.Article, {
   otherKey: 'articleId'
 })
 
+// 文章 & 标签 多对多关联
+Model.Article.belongsToMany(Model.Tag, {
+  through: Model.ArticleTag,
+  foreignKey: 'articleId',
+  otherKey: 'tagId'
+})
+
+Model.Tag.belongsToMany(Model.Article, {
+  through: Model.ArticleTag,
+  foreignKey: 'tagId',
+  otherKey: 'articleId'
+})
+
+
+// 用户 & 权限一对多关联
 Model.Roles.hasMany(Model.User, { foreignKey: 'roles' })
 Model.User.belongsTo(Model.Roles, { foreignKey: 'roles' });
 
