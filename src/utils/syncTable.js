@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:43:13
- * @LastEditTime: 2020-08-09 16:50:12
+ * @LastEditTime: 2020-08-14 00:29:21
  */ 
 
 const fs = require('fs');
@@ -13,7 +13,7 @@ const pathName = path.join(__dirname, '..', '/model')
 
 fs.readdirSync(pathName).forEach(file => {
   if (file === 'index.js') return
-  console.log(file)
+  console.log(`加载${file}模块中...`)
   Model.push(require(`${pathName}/${file}`))
 })
 

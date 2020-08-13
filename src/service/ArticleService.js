@@ -2,23 +2,24 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-12 23:16:47
+ * @LastEditTime: 2020-08-14 00:38:56
  */ 
 
 const { Op, where } = require("sequelize");
 var Model = require('../model');
 
 class ArticleService {
-  // 创建分类
-  static async SQLcreateSort(params) {
+  // 创建分类 Or 标签
+  static async SQLcreateSortOrTag(params, modelName, msgType) {
     try {
-      const hasSort = await ArticleService.checkSort(params)
-      if (!hasSort) {
-        const newSort = await Model.Sort.create(params)
-        if (newSort instanceof Model.Sort) {
-          return new global.Success('创建分类成功').returnData()
+      const hasSortOrTag = await ArticleService.checkTagOrSort(params, modelName, msgType)
+      if (!hasSortOrTag) {
+        const newSortOrTag = await Model[modelName].create(params)
+        if (newSortOrTag instanceof Model[modelName]) {
+          return new global.Success(`创建${msgType}成功`).returnData()
         }
       }
+      return new global.ParameterException(hasSortOrTag).returnData()
     } catch (error) {
       throw new global.ParameterException(error.errors[0].message)
     }
@@ -35,9 +36,18 @@ class ArticleService {
 
       const result = await Model.Sort.destroy({ where: { id: params.id } })
       if (result === 1) {
-        return new global.Success('分类删除成功').returnData()
+        return new global.Success('操作成功').returnData()
       }
-      
+    }
+  }
+
+  // 删除标签
+  static async SQLdeleteTag(params) {
+    if (params.id) {
+      const result = await Model.Tag.destroy({ where: { id: params.id } })
+      if (result === 1) {
+        return new global.Success('操作成功').returnData()
+      }
     }
   }
 
@@ -48,28 +58,49 @@ class ArticleService {
       const updateData = { name: params.name, desc: params.desc, alias: params.alias, parentId: params.parentId }
       const result = await Model.Sort.update(updateData, { where: { id: params.id } })
       if (result[0] === 1) {
-        return new global.Success('分类更新成功').returnData()
+        return new global.Success('操作成功').returnData()
+      }
+    }
+  }
+
+  // 更新标签
+  static async SQLupdateTag(params) {
+    const sort = await Model.Tag.findOne({ where: { id: params.id } })
+    if (sort instanceof Model.Tag) {
+      const updateData = { name: params.name, alias: params.alias }
+      const result = await Model.Tag.update(updateData, { where: { id: params.id } })
+      if (result[0] === 1) {
+        return new global.Success('操作成功').returnData()
       }
     }
   }
 
   // 查询所有分类
-  static async SQLquerySortList() {
-    const allSort = await Model.Sort.findAll()
-    return new global.Success('查询成功', allSort).returnData()
+  static async SQLquerySortOrTagList(query, modelName) {
+    try {
+      const { count, rows } = await Model[modelName].findAndCountAll({
+        limit: query.pageSize,
+        offset: (query.current - 1) * query.pageSize,
+        order: [['createdAt', 'desc']]
+      })
+      const result = { result: rows, total: count }
+      return new global.Success('查询成功', result).returnData()
+    } catch (error) {
+      throw new global.Success(error)
+    }
   }
 
   // 判断分类是否存在或别名重复
-  static async checkSort(params) {
+  static async checkTagOrSort(params, model, msgType) {
     let result = null
     let queryOptions = { name: params.name }
     if (params.alias) {
       queryOptions.alias = params.alias
     }
-    const oneSort = await Model.Sort.findOne({ where: { [Op.or]: queryOptions } })
+    const oneSort = await Model[model].findOne({ where: { [Op.or]: queryOptions } })
     if (oneSort) {
-      const msg = oneSort.name == params.name ? '已存在同名分类' : '已存在相同的分类别名'
-      throw new global.ParameterException(msg)
+      const msg = oneSort.name == params.name ? `已存在同名${msgType}` : `已存在相同的${$msgType}别名`
+      return msg
     }
     return result
   }

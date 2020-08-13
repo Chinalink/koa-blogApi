@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:56:11
- * @LastEditTime: 2020-08-12 19:37:12
+ * @LastEditTime: 2020-08-14 00:28:30
  */ 
 const Validation = require('../utils/validation')
 const UserService = require('../service/UserService');
@@ -59,7 +59,6 @@ class UserController {
   // 删除用户信息
   static async userDelete(ctx, next) {
     const uid = ctx.tokenData.uid
-    console.log(ctx.params)
     if (!ctx.params.id) {
       throw new global.ParameterException('请求参数错误')
     }
