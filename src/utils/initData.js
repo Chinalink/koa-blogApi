@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-08-07 14:27:19
- * @LastEditTime: 2020-08-08 17:01:43
+ * @LastEditTime: 2020-08-14 14:04:35
  */
 const OtherService = require('../service/OtherService');
 const Model = require('../model');
@@ -11,7 +11,7 @@ const roles = [
   { name: '作者' },
   { name: '普通用户' }
 ]
-const admin = { user: 'ddmmadmin', password: 'e10adc3949ba59abbe56e057f20f883e', email: '214911220@qq.com' }
+const admin = { user: 'ddmmadmin', nickName: '超级管理员', password: 'e10adc3949ba59abbe56e057f20f883e', email: '214911220@qq.com' }
 
 
 class InitData {

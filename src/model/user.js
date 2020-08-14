@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:28:37
- * @LastEditTime: 2020-08-12 19:40:24
+ * @LastEditTime: 2020-08-14 15:49:56
  */ 
 const moment = require('moment');
 const bcrypt = require('bcrypt')
@@ -112,7 +112,7 @@ const UserModel = sequelize.define('user', {
     }
   }
 }, {
-  tableName: 'users',
+  tableName: 'user',
   timestamps: true
 })
 

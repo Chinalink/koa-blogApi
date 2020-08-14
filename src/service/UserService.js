@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-12 19:37:52
+ * @LastEditTime: 2020-08-14 16:54:26
  */ 
 
  // sequelize
@@ -25,28 +25,31 @@ class UserService {
   static async SQLqueryUsers(query) {
     try {
       const { count, rows } = await Model.User.findAndCountAll({
-        limit: query.pageSize,
         offset: (query.current - 1) * query.pageSize,
+        limit: query.pageSize,
         order: [['createdAt', 'desc']],
+        attributes: {
+          include: [
+            [Sequelize.col('role.roles_id'), 'roles'],
+            [Sequelize.col('role.roles_name'), 'roleName'],
+            [Sequelize.fn('COUNT', Sequelize.col('articles.article_id')), 'articleNum']
+          ],
+          exclude: ['password']
+        }, 
         where: { 
           [Op.and]: [
             { nickName: { [Op.ne]: '超级管理员', [Op.substring]: query.nickName } }, 
             { email: { [Op.substring]: query.email } }
           ]
         },
-        attributes: { 
-          exclude: ['password', 'roles']
-        }, 
         include: [
-          {
-            model: Model.Roles,
-            attributes: [['roles_id', 'roles'], ['roles_name', 'roleName']],
-            duplicating: false
-          }
-        ]
-        
+          { model: Model.Article, attributes: [], duplicating: false },
+          { model: Model.Roles, attributes: [], duplicating: false }
+        ],
+        distinct: true,
+        group: ['user.user_id']
       })
-      const result = { result: rows, total: count }
+      const result = { result: rows, total: count.length }
       return new global.Success('查询成功', result).returnData()
     } catch (error) {
       throw new global.Success(error)
