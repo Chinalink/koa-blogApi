@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:56:11
- * @LastEditTime: 2020-08-14 00:28:30
+ * @LastEditTime: 2020-08-14 17:05:20
  */ 
 const Validation = require('../utils/validation')
 const UserService = require('../service/UserService');
@@ -16,13 +16,14 @@ class UserController {
 
   // 查询用户列表
   static async userList(ctx, next) {
-    const { pageSize = 20, current = 1, nickName = '', email = '' } = ctx.request.query
+    const { pageSize = 20, current = 1, nickName = '', email = '', roles = '' } = ctx.request.query
 
     const query = {
       pageSize: +pageSize,
       current: +current,
       nickName,
-      email
+      email,
+      roles
     }
 
     const data = await UserService.SQLqueryUsers(query)

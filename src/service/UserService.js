@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-14 16:57:57
+ * @LastEditTime: 2020-08-14 17:04:52
  */ 
 
  // sequelize
@@ -38,6 +38,7 @@ class UserService {
         }, 
         where: { 
           [Op.and]: [
+            { roles: { [Op.substring]: query.roles } },
             { nickName: { [Op.ne]: '超级管理员', [Op.substring]: query.nickName } }, 
             { email: { [Op.substring]: query.email } }
           ]
