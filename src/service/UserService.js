@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-14 16:54:26
+ * @LastEditTime: 2020-08-14 16:57:57
  */ 
 
  // sequelize
@@ -32,7 +32,7 @@ class UserService {
           include: [
             [Sequelize.col('role.roles_id'), 'roles'],
             [Sequelize.col('role.roles_name'), 'roleName'],
-            [Sequelize.fn('COUNT', Sequelize.col('articles.article_id')), 'articleNum']
+            [Sequelize.fn('COUNT', Sequelize.col('articles.article_id')), 'articleTotal']
           ],
           exclude: ['password']
         }, 
