@@ -2,7 +2,7 @@
  * @Description: 分类表
  * @Author: HuGang
  * @Date: 2020-07-25 13:27:16
- * @LastEditTime: 2020-08-17 16:14:56
+ * @LastEditTime: 2020-08-17 17:45:59
  */ 
 const moment = require('moment');
 const { DataTypes } = require('sequelize');
@@ -36,11 +36,6 @@ const Sort = sequelize.define('sort', {
     type: DataTypes.STRING(200),
     field: 'sort_desc',
     defaultValue: ''
-  }, 
-  num: {                                // 当前分类下文章数目
-    type: DataTypes.INTEGER(11),
-    field: 'sort_num',
-    defaultValue: 0
   }, 
   parentId: {                           // 父分类ID
     type: DataTypes.INTEGER(11),
