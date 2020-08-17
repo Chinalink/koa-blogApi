@@ -2,7 +2,7 @@
  * @Description: 分类表
  * @Author: HuGang
  * @Date: 2020-07-25 13:27:16
- * @LastEditTime: 2020-08-13 22:43:37
+ * @LastEditTime: 2020-08-17 16:15:08
  */
 const moment = require('moment');
 const { DataTypes } = require('sequelize');
@@ -11,7 +11,7 @@ const sequelize = require('../database/dbConn');
 const Tag = sequelize.define('tag', {
   id: {
     type: DataTypes.INTEGER(11),
-    field: 'tag_Id',
+    field: 'tag_id',
     primaryKey: true,                   // 主键
     autoIncrement: true,                // 自动递增
   },

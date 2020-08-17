@@ -2,7 +2,7 @@
  * @Description: 分类表
  * @Author: HuGang
  * @Date: 2020-07-25 13:27:16
- * @LastEditTime: 2020-08-07 13:41:11
+ * @LastEditTime: 2020-08-17 16:14:56
  */ 
 const moment = require('moment');
 const { DataTypes } = require('sequelize');
@@ -11,7 +11,7 @@ const sequelize = require('../database/dbConn');
 const Sort = sequelize.define('sort', {
   id: {
     type: DataTypes.INTEGER(11),
-    field: 'sort_Id',
+    field: 'sort_id',
     primaryKey: true,                   // 主键
     autoIncrement: true,                // 自动递增
   },
