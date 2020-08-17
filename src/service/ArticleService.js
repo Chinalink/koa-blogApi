@@ -2,10 +2,10 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-14 00:38:56
+ * @LastEditTime: 2020-08-17 20:09:59
  */ 
 
-const { Op, where } = require("sequelize");
+const { Op, Sequelize } = require("sequelize");
 var Model = require('../model');
 
 class ArticleService {
@@ -81,8 +81,22 @@ class ArticleService {
       const { count, rows } = await Model[modelName].findAndCountAll({
         limit: query.pageSize,
         offset: (query.current - 1) * query.pageSize,
-        order: [['createdAt', 'desc']]
+        order: [['createdAt', 'desc']],
+        attributes: {
+          include: [
+            [
+              Sequelize.literal(`(                    
+                SELECT COUNT(article.article_id) AS count                 
+                FROM article AS article
+                INNER JOIN article_${modelName.toLowerCase()} AS article${modelName}
+                ON article.article_id = article${modelName}.article_id
+              )`),
+              'articleTotal'
+            ]
+          ]
+        }
       })
+
       const result = { result: rows, total: count }
       return new global.Success('查询成功', result).returnData()
     } catch (error) {
