@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-08-07 13:13:06
- * @LastEditTime: 2020-08-07 15:18:42
+ * @LastEditTime: 2020-08-18 12:20:34
  */
 const moment = require('moment');
 const { DataTypes } = require('sequelize');
@@ -10,9 +10,8 @@ const sequelize = require('../database/dbConn');
 
 const Roles = sequelize.define('roles', {
   id: {
-    type: DataTypes.INTEGER(11),
+    type: DataTypes.STRING(50),
     primaryKey: true, // 主键
-    autoIncrement: true,
     field: 'roles_id'
   },
   name: {

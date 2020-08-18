@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:56:11
- * @LastEditTime: 2020-08-08 16:51:53
+ * @LastEditTime: 2020-08-18 12:22:13
  */
 const OtherService = require('../service/OtherService');
 const Validation = require('../utils/validation')
@@ -16,10 +16,9 @@ class OtherController {
   }
 
   static async register(ctx, next) {
-    const { roles } = ctx.request.body
-    if(roles === 1) {
-      throw new global.ParameterException('创建失败')
-    }
+    const uid = ctx.tokenData.uid
+    Validation.isAdmin(uid)
+    
     const data = await OtherService.SQLregister(ctx.request.body)
     return ctx.response.body = data
   }

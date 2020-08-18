@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-10 23:31:01
+ * @LastEditTime: 2020-08-18 12:26:59
  */ 
 
  // sequelize
@@ -27,32 +27,22 @@ class OtherService {
     throw new global.ParameterException('用户不存在')
   }
   // 注册
-  static async SQLregister(params, roles) {
+  static async SQLregister(params) {
     try {
       const [user, created] = await Model.User.findOrCreate({
         where: { user: params.user },
         defaults: params
       })
       if (created) {
-        let userRoles = params.role || 3
-        if (roles) {
-          userRoles = roles
-        }
+        const userRoles = params.role
         const role = await Model.Roles.findOne({ where: { id: userRoles } })
         await user.setRole(role)
-        if (roles) {
-          console.log('初始化超级管理员成功')
-        } else {
-          return new global.Success('注册成功').returnData()
-        }
+        return new global.Success('注册成功').returnData()
       }
-      if (!roles) {
-        return new global.ParameterException('用户已存在').returnData()
-      }
+      return new global.ParameterException('用户已存在').returnData()
     } catch (error) {
       throw new global.ParameterException(error.errors[0].message)
     }
-    
   }
 }
 
