@@ -2,20 +2,24 @@
  * @Description: 鉴权管理
  * @Author: HuGang
  * @Date: 2020-08-05 12:32:45
- * @LastEditTime: 2020-08-08 18:21:43
+ * @LastEditTime: 2020-08-18 18:08:44
  */
+const GlobalConfig = require('../config');
 const jwt = require('jsonwebtoken')
-const secretKey = 'XdyCxM'
 class Auth {
 
   static createToken(uid, roles) {
-    const token = jwt.sign({ uid, roles }, secretKey, { expiresIn: 60 * 60 * 2 })
+    const token = jwt.sign(
+      { uid, roles },
+      GlobalConfig.jwtConfig.secretKey,
+      GlobalConfig.jwtConfig.expiresIn
+    )
     return token
   }
 
   static verifyToken(token) {
     try {
-      const data = jwt.verify(token, secretKey)
+      const data = jwt.verify(token, GlobalConfig.jwtConfig.secretKey)
       if(data) {
         return data
       }
