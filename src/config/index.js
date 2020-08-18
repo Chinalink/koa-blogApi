@@ -2,10 +2,9 @@
  * @Description: 配置文件
  * @Author: HuGang
  * @Date: 2020-08-18 16:07:32
- * @LastEditTime: 2020-08-18 16:15:26
+ * @LastEditTime: 2020-08-18 22:26:07
  */
 
-// 数据库config
 const DBConfig = {
   host: 'localhost', //  接数据库的主机
   port: '3306', //  接数据库的端口
@@ -23,7 +22,6 @@ const DBConfig = {
   timezone: '+08:00' //  解决时差 - 默认存储时间存在8小时误差
 }
 
-// jwt config
 const jwtConfig = {
   secretKey: 'XdyCxM',
   expiresIn: {
@@ -31,9 +29,14 @@ const jwtConfig = {
   }
 }
 
-
+const qiNiuConfig = {
+  accessKey: '--R3OUe2Q_WZoVzWCSB_8UVj8JGIpodOs5Pep70C',
+  secretKey: 'wokCxw-0nc87QsJPNMI7LSyb-9-F5SxMXz9eYhYt',
+  scope: 'ddmmblog'
+}
 
 module.exports = {
   DBConfig,
-  jwtConfig
+  jwtConfig,
+  qiNiuConfig
 }

@@ -6,7 +6,7 @@
  */
 const moment = require('moment');
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database/dbConn');
+const sequelize = require('../base/dbConn');
 
 const Roles = sequelize.define('roles', {
   id: {

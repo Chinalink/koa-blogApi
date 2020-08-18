@@ -8,7 +8,7 @@ const moment = require('moment');
 const bcrypt = require('bcrypt')
 const utils = require('../utils/utils');
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database/dbConn');
+const sequelize = require('../base/dbConn');
 
 const UserModel = sequelize.define('user', {
   // 在这里定义模型属性

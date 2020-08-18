@@ -2,14 +2,14 @@
  * @Description: 中间件加载
  * @Author: HuGang
  * @Date: 2020-08-04 23:47:11
- * @LastEditTime: 2020-08-18 18:11:26
+ * @LastEditTime: 2020-08-18 22:27:40
  */
 const cors = require('@koa/cors') // 用于开启跨域
 const koaBody = require('koa-body') // 上传图片中间件
 const router = require('../router') // 路由
 const catchError = require('../middlewares/catcherror'); // 全局错误处理
-const errors = require('./httpException');  // 常用错误类
-const sequelize = require('../database/dbConn'); // 数据库
+const errors = require('../utils/httpException');  // 常用错误类
+const sequelize = require('./dbConn'); // 数据库
 
 class InitManager  {
 

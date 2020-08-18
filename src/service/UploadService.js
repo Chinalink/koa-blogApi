@@ -2,11 +2,12 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-08-18 13:10:12
- * @LastEditTime: 2020-08-18 15:57:14
+ * @LastEditTime: 2020-08-18 22:12:31
  */
 const fs = require('fs')
 const path = require('path')
 const qiniu = require('qiniu')
+const GlobalConfig = require('../config');
 
 const uploadService = {
   // 本地上传
@@ -33,18 +34,17 @@ const uploadService = {
   },
   // 上传到七牛空间
   upToQiniu(filePath, key) {
-    const accessKey = '--R3OUe2Q_WZoVzWCSB_8UVj8JGIpodOs5Pep70C' // 你的七牛的accessKey
-    const secretKey = 'wokCxw-0nc87QsJPNMI7LSyb-9-F5SxMXz9eYhYt' // 你的七牛的secretKey
+    const accessKey = GlobalConfig.qiNiuConfig.accessKey
+    const secretKey = GlobalConfig.qiNiuConfig.secretKey
     const mac = new qiniu.auth.digest.Mac(accessKey, secretKey)
     const options = {
-      scope: 'ddmmblog' // 你的七牛存储对象
+      scope: GlobalConfig.qiNiuConfig.scope
     }
     const putPolicy = new qiniu.rs.PutPolicy(options)
     const uploadToken = putPolicy.uploadToken(mac)
 
     const config = new qiniu.conf.Config()
-    // 空间对应的机房
-    config.zone = qiniu.zone.Zone_z2
+    config.zone = qiniu.zone.Zone_z2 // 空间对应的机房
 
     const localFile = filePath
     const formUploader = new qiniu.form_up.FormUploader(config)

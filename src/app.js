@@ -2,11 +2,11 @@
  * @Description: 主模块
  * @Author: HuGang
  * @Date: 2019-12-02 13:28:14
- * @LastEditTime: 2020-08-07 14:17:51
+ * @LastEditTime: 2020-08-18 22:27:48
  */
 // 依赖库
 const Koa = require('koa')
-const InitManager = require('./utils/init');
+const InitManager = require('./base/init');
 
 const app = new Koa()
 InitManager.initCore(app)

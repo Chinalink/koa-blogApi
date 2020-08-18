@@ -2,11 +2,11 @@
  * @Description: 文章模型
  * @Author: HuGang
  * @Date: 2020-07-31 14:32:34
- * @LastEditTime: 2020-08-07 13:40:56
+ * @LastEditTime: 2020-08-18 22:31:45
  */ 
 const moment = require('moment');
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database/dbConn');
+const sequelize = require('../base/dbConn');
 
 const Article = sequelize.define('article', {
   id: {                                 // 文章ID

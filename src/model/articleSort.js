@@ -2,10 +2,10 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-28 11:21:33
- * @LastEditTime: 2020-07-31 18:11:25
+ * @LastEditTime: 2020-08-18 22:32:06
  */ 
 const { DataTypes } = require('sequelize');
-const sequelize = require('../database/dbConn');
+const sequelize = require('../base/dbConn');
 
 const ArticleSort = sequelize.define('articleSort', {
   articleId: {                          // 文章ID
