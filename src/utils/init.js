@@ -2,10 +2,10 @@
  * @Description: 中间件加载
  * @Author: HuGang
  * @Date: 2020-08-04 23:47:11
- * @LastEditTime: 2020-08-09 00:41:13
+ * @LastEditTime: 2020-08-18 18:11:26
  */
 const cors = require('@koa/cors') // 用于开启跨域
-const bodyParser = require('koa-bodyparser') // 请求体解析中间件
+const koaBody = require('koa-body') // 上传图片中间件
 const router = require('../router') // 路由
 const catchError = require('../middlewares/catcherror'); // 全局错误处理
 const errors = require('./httpException');  // 常用错误类
@@ -24,7 +24,13 @@ class InitManager  {
     InitManager.app
       .use(catchError)
       .use(cors())
-      .use(bodyParser())
+      .use(koaBody({
+        multipart: true,
+        formidable: {
+          maxFileSize: 200 * 1024 * 1024, // 设置上传文件大小最大限制，默认2M
+          keepExtensions: true // 保存图片的扩展名
+        }
+      }))
   }
   
   static loadRoutes() {
