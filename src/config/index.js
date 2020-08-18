@@ -2,7 +2,7 @@
  * @Description: 配置文件
  * @Author: HuGang
  * @Date: 2020-08-18 16:07:32
- * @LastEditTime: 2020-08-18 22:26:07
+ * @LastEditTime: 2020-08-18 22:52:32
  */
 
 const DBConfig = {
@@ -32,7 +32,8 @@ const jwtConfig = {
 const qiNiuConfig = {
   accessKey: '--R3OUe2Q_WZoVzWCSB_8UVj8JGIpodOs5Pep70C',
   secretKey: 'wokCxw-0nc87QsJPNMI7LSyb-9-F5SxMXz9eYhYt',
-  scope: 'ddmmblog'
+  scope: 'ddmmblog',
+  imgDomain: 'http://qf8zthosn.hn-bkt.clouddn.com/'
 }
 
 module.exports = {

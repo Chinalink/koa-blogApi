@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-08-01 16:47:45
- * @LastEditTime: 2020-08-18 12:35:38
+ * @LastEditTime: 2020-08-18 23:40:57
  */ 
 
 class Validation {
@@ -13,14 +13,14 @@ class Validation {
     }
   }
 
-  static isSelf(uid, targetId) {
-    if (uid !== 'superAdmin' && uid != targetId) {
+  static isSelf(token, targetId) {
+    if (token.roles !== 'superAdmin' && token.uid != targetId) {
       throw new global.AuthFaild('权限不足', 1003)
     }
   }
 
-  static isAdmin(uid) {
-    if (uid !== 'superAdmin') {
+  static isAdmin(roles) {
+    if (roles !== 'superAdmin') {
       throw new global.AuthFaild('权限不足', 1003)
     }
   }

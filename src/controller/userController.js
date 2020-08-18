@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:56:11
- * @LastEditTime: 2020-08-14 17:05:20
+ * @LastEditTime: 2020-08-18 23:40:43
  */ 
 const Validation = require('../utils/validation')
 const UserService = require('../service/UserService');
@@ -42,11 +42,10 @@ class UserController {
 
   // 更新用户信息
   static async userUpdate(ctx, next) {
-    const uid = ctx.tokenData.uid
     if (!ctx.params.id) {
       throw new global.ParameterException('请求参数错误')
     }
-    Validation.isSelf(uid, ctx.params.id)
+    Validation.isSelf(ctx.tokenData, ctx.params.id)
     const { user, email } = ctx.request.body
     Validation.isEmpty(user, '用户名不能为空')
     Validation.isEmpty(email, '密码不能为空')
