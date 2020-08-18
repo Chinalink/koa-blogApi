@@ -15,10 +15,11 @@
     "bcrypt": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "koa": "^2.13.0",
-    "koa-bodyparser": "^4.3.0",
+    "koa-body": "^4.2.0",
     "moment": "^2.27.0",
     "mysql2": "^2.1.0",
     "nodemon": "^2.0.4",
+    "qiniu": "^7.3.2",
     "sequelize": "^6.3.3"
   }
 }
