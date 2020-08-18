@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-08-01 16:47:45
- * @LastEditTime: 2020-08-12 19:29:35
+ * @LastEditTime: 2020-08-18 12:35:38
  */ 
 
 class Validation {
@@ -14,13 +14,13 @@ class Validation {
   }
 
   static isSelf(uid, targetId) {
-    if (uid !== 1 && uid != targetId) {
+    if (uid !== 'superAdmin' && uid != targetId) {
       throw new global.AuthFaild('权限不足', 1003)
     }
   }
 
   static isAdmin(uid) {
-    if (uid !== 1) {
+    if (uid !== 'superAdmin') {
       throw new global.AuthFaild('权限不足', 1003)
     }
   }

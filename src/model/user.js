@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:28:37
- * @LastEditTime: 2020-08-14 15:49:56
+ * @LastEditTime: 2020-08-18 12:34:45
  */ 
 const moment = require('moment');
 const bcrypt = require('bcrypt')
@@ -92,7 +92,7 @@ const UserModel = sequelize.define('user', {
     defaultValue: ''
   },
   roles: {
-    type: DataTypes.INTEGER(11),
+    type: DataTypes.STRING(50),
     field: 'user_role',
   },
   createdAt: { // 创建时间
