@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:56:11
- * @LastEditTime: 2020-08-19 00:36:22
+ * @LastEditTime: 2020-08-20 14:39:58
  */
 const OtherService = require('../service/OtherService');
 const UploadService = require('../service/UploadService');
@@ -25,7 +25,7 @@ class OtherController {
     return ctx.response.body = data
   }
 
-  static async upload(ctx, next) {
+  static async createUpload(ctx, next) {
     const { file } = ctx.request.files; // 获取上传文件
     const { type } = ctx.request.body 
     const res = await UploadService.uploadFile(file)
@@ -43,6 +43,11 @@ class OtherController {
       }
     }
   }
+
+   static async queryUploadList(ctx, next) {
+     const result = await UploadService.queryUploadList()
+     return ctx.response.body = {code: 0, data: result, msg: '操作成功'}
+   }
 }
 
 module.exports = OtherController

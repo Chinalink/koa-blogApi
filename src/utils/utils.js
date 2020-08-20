@@ -2,12 +2,11 @@
  * @Description: 工具类
  * @Author: HuGang
  * @Date: 2020-08-05 22:58:19
- * @LastEditTime: 2020-08-19 00:02:02
+ * @LastEditTime: 2020-08-20 14:38:03
  */
-class Utils {
-  constructor() {}
-
-  static randomString(e) {
+const utils = {
+  // 创建随机字符串
+  randomString(e) {
     e = e || 32
     const t = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz1234567890'
     const len = t.length
@@ -16,8 +15,42 @@ class Utils {
       result += t.charAt(Math.floor(Math.random() * len))
     }
     return result
+  },
+  pathToTreeList(data) {
+    const result = []
+    data.forEach(item => {
+      this.createTreeNode(item, result)
+    })
+    return result
+  },
+  createTreeNode(obj, arr) {
+    let splitpath = obj.key.split('/')
+    const imgName = splitpath.pop()
+    let parentTree = arr
+    splitpath.map((path, pathIndex, splitpathArr) => {
+      let node = {
+        name: path,
+        type: 'directory'
+      }
+      let Index = parentTree.findIndex(item => {
+        return item.name === path
+      })
+      if (Index === -1) {
+        node.children = []
+        if (pathIndex === splitpathArr.length - 1) {
+          const imgObj = {
+            key: imgName,
+            mimeType: obj.mimeType,
+            putTime: obj.putTime
+          }
+          node.children.push(imgObj)
+        }
+        parentTree.push(node)
+      }
+      let index = Index > -1 ? Index : parentTree.length - 1
+      parentTree = parentTree[index].children
+    })
   }
-
 }
 
-module.exports = Utils
+module.exports = utils
