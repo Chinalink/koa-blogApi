@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:56:11
- * @LastEditTime: 2020-08-20 14:39:58
+ * @LastEditTime: 2020-08-21 01:17:22
  */
 const OtherService = require('../service/OtherService');
 const UploadService = require('../service/UploadService');
@@ -34,20 +34,28 @@ class OtherController {
       const qiniu = await UploadService.upToQiniu(res.imgPath, res.imgKey, type)
       if (qiniu.key) {
         UploadService.removeTemImage(res.imgPath)
-        const imgDomain = GlobalConfig.qiNiuConfig.imgDomain
-        const result = {
-          imgHash: qiniu.hash,
-          imgUrl: `${imgDomain}${qiniu.key}`
+        const params = {
+          hash: qiniu.hash,
+          name: qiniu.key,
+          type: +type
         }
-        return ctx.response.body = {code: 0, data: result, msg: '上传成功'}
+        const data = await OtherService.SQLCreatePicture(params)
+        return ctx.response.body = data
       }
     }
   }
+  
+  static async queryPictureList(ctx, next) {
+    const { pageSize = 20, current = 1, type = 2 } = ctx.request.query
 
-   static async queryUploadList(ctx, next) {
-     const result = await UploadService.queryUploadList()
-     return ctx.response.body = {code: 0, data: result, msg: '操作成功'}
-   }
+    const query = {
+      pageSize: +pageSize,
+      current: +current,
+      type: +type
+    }
+    const data = await OtherService.SQLQueryPicture(query)
+    return ctx.response.body = data
+  }
 }
 
 module.exports = OtherController

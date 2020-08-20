@@ -2,7 +2,7 @@
  * @Description: 工具类
  * @Author: HuGang
  * @Date: 2020-08-05 22:58:19
- * @LastEditTime: 2020-08-20 14:38:03
+ * @LastEditTime: 2020-08-21 01:13:54
  */
 const utils = {
   // 创建随机字符串
@@ -24,7 +24,7 @@ const utils = {
     return result
   },
   createTreeNode(obj, arr) {
-    let splitpath = obj.key.split('/')
+    let splitpath = obj.name.split('/')
     const imgName = splitpath.pop()
     let parentTree = arr
     splitpath.map((path, pathIndex, splitpathArr) => {
@@ -38,12 +38,7 @@ const utils = {
       if (Index === -1) {
         node.children = []
         if (pathIndex === splitpathArr.length - 1) {
-          const imgObj = {
-            key: imgName,
-            mimeType: obj.mimeType,
-            putTime: obj.putTime
-          }
-          node.children.push(imgObj)
+          node.children.push(obj)
         }
         parentTree.push(node)
       }
