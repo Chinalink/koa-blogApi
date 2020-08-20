@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-21 01:22:13
+ * @LastEditTime: 2020-08-21 01:30:35
  */ 
 
  // sequelize
@@ -50,7 +50,7 @@ class OtherService {
     try {
       const newPic = await Model.Picture.create(params)
       if (newPic instanceof Model.Picture) {
-        return new global.Success('上传成功').returnData()
+        return new global.Success('上传成功', newPic).returnData()
       }
     } catch (error) {
       throw new global.ParameterException(error.errors[0].message)
