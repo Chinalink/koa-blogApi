@@ -2,7 +2,7 @@
  * @Description: 文章模型
  * @Author: HuGang
  * @Date: 2020-07-31 14:32:34
- * @LastEditTime: 2020-08-18 22:31:45
+ * @LastEditTime: 2020-08-22 20:33:37
  */ 
 const moment = require('moment');
 const { DataTypes } = require('sequelize');
@@ -34,7 +34,7 @@ const Article = sequelize.define('article', {
     defaultValue: ''
   },
   content: {                            // 文章内容
-    type: DataTypes.TEXT('long'),
+    type: DataTypes.TEXT,
     field: 'article_content',
     allowNull: false,
     validate: {
