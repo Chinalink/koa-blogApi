@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-21 01:30:35
+ * @LastEditTime: 2020-08-23 17:37:18
  */ 
 
  // sequelize
@@ -56,6 +56,27 @@ class OtherService {
       throw new global.ParameterException(error.errors[0].message)
     }
   }
+  // 删除图片
+  static async SQLdeletePicture(params) {
+    if (params.id) {
+      const result = await Model.Picture.destroy({ where: { id: params.id } })
+      if (result === 1) {
+        return new global.Success('操作成功').returnData()
+      } else {
+        return new global.ParameterException('操作失败').returnData()
+      }
+    }
+  }
+  // 查找单张图片
+  static async SQLfindOnePicture(params) {
+    const pic = await Model.Picture.findOne({ where: { id: params.id } })
+    if(pic) {
+      return { code: 0, data: pic }
+    } else {
+      return { code: 4004 }
+    }
+  }
+
   // 查询图片列表
   static async SQLQueryPicture(query) {
     try {

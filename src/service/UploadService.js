@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-08-18 13:10:12
- * @LastEditTime: 2020-08-20 14:41:07
+ * @LastEditTime: 2020-08-23 17:07:07
  */
 const fs = require('fs')
 const path = require('path')
@@ -34,6 +34,7 @@ const uploadService = {
     const prefix = moment(new Date()).format('YYYYMMDD')
     return `${prefix}_${utils.randomString(16)}.${suffix}`
   },
+  // 设置存储目录
   setFilePath(type) {
     if(type == 1) {
       return 'avator'
@@ -77,6 +78,20 @@ const uploadService = {
       })
     })
   },
+  // 删除七牛图片
+  deleteToQiniu(key) {
+    const { mac, config } = this.getQiNiuConfig()
+    const bucketManager = new qiniu.rs.BucketManager(mac, config)
+    const bucket = GlobalConfig.qiNiuConfig.scope;
+    
+    bucketManager.delete(bucket, key, function (respErr, respBody, respInfo) {
+      if (respErr) { 
+        reject(respErr)
+      } else {
+        resolved({ status: respInfo.statusCode, data: respBody })
+      }
+    });
+  },
   // 获取上传资源列表
   queryUploadList(marker) {
     const { mac, config } = this.getQiNiuConfig()
@@ -99,8 +114,6 @@ const uploadService = {
             respBody = utils.pathToTreeList(respBody.items)
           }
           resolved(respBody)
-          // var nextMarker = respBody.marker;
-          // var commonPrefixes = respBody.commonPrefixes;
         } else {
           resolved(respBody)
         }

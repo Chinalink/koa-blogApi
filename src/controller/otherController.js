@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:56:11
- * @LastEditTime: 2020-08-21 01:17:22
+ * @LastEditTime: 2020-08-23 17:39:09
  */
 const OtherService = require('../service/OtherService');
 const UploadService = require('../service/UploadService');
@@ -43,6 +43,21 @@ class OtherController {
         return ctx.response.body = data
       }
     }
+  }
+
+  static async deletePicture(ctx, next) {
+    const { id } = ctx.params
+    Validation.isEmpty(id, '请求参数错误')
+
+    const picInfo = await OtherService.SQLfindOnePicture(ctx.params)
+    let data = { code: 400, msg: '删除失败' }
+    if(picInfo.code === 0) {
+      const res = await UploadService.deleteToQiniu(picInfo.data.name)
+      if (res.status === 200) {
+        data = await OtherService.SQLdeletePicture(ctx.params)
+      }
+    }
+    return ctx.response.body = data
   }
   
   static async queryPictureList(ctx, next) {

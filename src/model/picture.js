@@ -2,17 +2,22 @@
  * @Description: 分类表
  * @Author: HuGang
  * @Date: 2020-08-21 00:18:27
- * @LastEditTime: 2020-08-21 00:41:42
+ * @LastEditTime: 2020-08-23 17:11:15
  */
 const moment = require('moment');
 const { DataTypes } = require('sequelize');
 const sequelize = require('../base/dbConn');
 
 const Picture = sequelize.define('picture', {
+  id: {
+    type: DataTypes.INTEGER(11),
+    field: 'pic_id',
+    primaryKey: true,                   // 主键
+    autoIncrement: true,                // 自动递增
+  },
   name: {
     type: DataTypes.STRING(255),
-    field: 'pic_name',
-    primaryKey: true                   // 主键
+    field: 'pic_name'
   },
   hash: {                               // 七牛hash
     type: DataTypes.STRING(255),

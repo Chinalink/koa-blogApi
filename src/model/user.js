@@ -2,7 +2,7 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-21 17:28:37
- * @LastEditTime: 2020-08-18 12:34:45
+ * @LastEditTime: 2020-08-23 17:14:44
  */ 
 const moment = require('moment');
 const bcrypt = require('bcrypt')
@@ -10,7 +10,7 @@ const utils = require('../utils/utils');
 const { DataTypes } = require('sequelize');
 const sequelize = require('../base/dbConn');
 
-const UserModel = sequelize.define('user', {
+const User = sequelize.define('user', {
   // 在这里定义模型属性
   id: {
     type: DataTypes.INTEGER(11),
@@ -116,4 +116,4 @@ const UserModel = sequelize.define('user', {
   timestamps: true
 })
 
-module.exports = UserModel
+module.exports = User
