@@ -2,14 +2,25 @@
  * @Description: 文章相关Controller
  * @Author: HuGang
  * @Date: 2020-07-31 15:13:17
- * @LastEditTime: 2020-08-14 00:17:12
+ * @LastEditTime: 2020-08-23 16:16:41
  */ 
 const Validation = require('../utils/validation')
 const ArticleService = require('../service/ArticleService');
 
 class ArticleController {
-  // 文章相关
+  // 创建文章
   static async createArticle(ctx, next) {
+    let { tags } = ctx.request.body
+    if(tags && tags.length) {
+      // 需要创建的标签
+      const createFilter = tags.filter(item => item.name == item.id)
+      const createTags = createFilter.map(item => { return { name: item.name } })
+      // 已经创建的标签
+      const findTags = tags.filter(item => item.name != item.id)
+      const Tags = findTags.map(item => item.id)
+      tags = [].concat(createTags, Tags)
+    }
+
     const data = await ArticleService.SQLcreateArticle(ctx.request.body)
     return ctx.response.body = data
   }

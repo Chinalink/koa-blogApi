@@ -2,7 +2,7 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-17 20:09:59
+ * @LastEditTime: 2020-08-23 16:12:59
  */ 
 
 const { Op, Sequelize } = require("sequelize");
@@ -125,11 +125,31 @@ class ArticleService {
       const newArticle = await Model.Article.create(params)
 
       if (newArticle instanceof Model.Article) {
-        const sorts = await Model.Sort.findAll({ where: { id: params.category } })
-        await newArticle.setSorts(sorts)
+        // 有选分类
+        if (params.category && params.category.length) {
+          const sorts = await Model.Sort.findAll({ where: { id: { [Op.or]: params.category } } })
+          await newArticle.setSorts(sorts)
+        } else {
+          const sort = await Model.Sort.findOne({ where: { name: '未分类' } })
+          await newArticle.setSorts(sort)
+        }
+        // 有选标签
+        if (params.tags && params.tags.length) {
+          const isHaveTags = params.tags.filter(item => typeof item != 'object')
+          const createTags = params.tags.filter(item => typeof item == 'object')
+          if (isHaveTags.length) {
+            const sorts = await Model.Tag.findAll({ where: { id: { [Op.or]: isHaveTags } } })
+            await newArticle.setTags(findTags)
+          }
+          if (createTags.length) {
+            const res = await Model.Tag.bulkCreate(createTags, { ignoreDuplicates: true })
+            await newArticle.setTags(res)
+          }
+        }
         return new global.Success('创建文章成功').returnData()
       }
     } catch (error) {
+      console.log(error)
       throw new global.ParameterException(error.errors[0].message)
     }
   }
@@ -139,14 +159,26 @@ class ArticleService {
     const { count, rows } = await Model.Article.findAndCountAll({
       limit: query.pageSize,
       offset: (query.current - 1) * query.pageSize,
-      attributes: { exclude: ['timer'] },
+      attributes: { 
+        include: [
+          [Sequelize.col('user.user_nick_name'), 'author']
+        ],
+        exclude: ['timer']
+      },
       order: [['createdAt', 'desc']],
       // where: {
       //   title: { [Op.like]: '%foo%' }
       // },
       include: [
+        { model: Model.User, attributes: [], duplicating: false },
         {
           model: Model.Sort,
+          attributes: ['id', 'name'],
+          duplicating: false,
+          through: { attributes: [] }
+        },
+        {
+          model: Model.Tag,
           attributes: ['id', 'name'],
           duplicating: false,
           through: { attributes: [] }
