@@ -2,7 +2,7 @@
  * @Description: 工具类
  * @Author: HuGang
  * @Date: 2020-08-05 22:58:19
- * @LastEditTime: 2020-08-21 01:13:54
+ * @LastEditTime: 2020-08-23 14:52:39
  */
 const utils = {
   // 创建随机字符串
@@ -28,19 +28,19 @@ const utils = {
     const imgName = splitpath.pop()
     let parentTree = arr
     splitpath.map((path, pathIndex, splitpathArr) => {
-      let node = {
-        name: path,
-        type: 'directory'
-      }
-      let Index = parentTree.findIndex(item => {
-        return item.name === path
-      })
+      let Index = parentTree.findIndex(item => item.name === path)
+
       if (Index === -1) {
+        let node = { name: path, type: 'directory' }
         node.children = []
         if (pathIndex === splitpathArr.length - 1) {
           node.children.push(obj)
         }
         parentTree.push(node)
+      } else {
+        if (pathIndex === splitpathArr.length - 1) {
+          parentTree[Index].children.push(obj)
+        }
       }
       let index = Index > -1 ? Index : parentTree.length - 1
       parentTree = parentTree[index].children
