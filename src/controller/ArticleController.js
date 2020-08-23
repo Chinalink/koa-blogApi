@@ -2,7 +2,7 @@
  * @Description: 文章相关Controller
  * @Author: HuGang
  * @Date: 2020-07-31 15:13:17
- * @LastEditTime: 2020-08-23 16:16:41
+ * @LastEditTime: 2020-08-23 20:15:21
  */ 
 const Validation = require('../utils/validation')
 const ArticleService = require('../service/ArticleService');
@@ -31,6 +31,13 @@ class ArticleController {
 
   static async updateArticle(ctx, next) {
 
+  }
+
+  static async queryArticle(ctx, next) {
+    const { id } = ctx.request.query
+    Validation.isEmpty(id, '请求参数错误')
+    const data = await ArticleService.SQLqueryArticle(id)
+    return ctx.response.body = data
   }
   
   // 查询文章列表

@@ -2,7 +2,7 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-23 16:12:59
+ * @LastEditTime: 2020-08-23 20:17:57
  */ 
 
 const { Op, Sequelize } = require("sequelize");
@@ -151,6 +151,22 @@ class ArticleService {
     } catch (error) {
       console.log(error)
       throw new global.ParameterException(error.errors[0].message)
+    }
+  }
+
+  static async SQLqueryArticle(id) {
+    const article = await Model.Article.findOne({ 
+      where: { id },
+      include: [
+        { model: Model.User, attributes: ['id', 'nickName'], duplicating: false },
+        { model: Model.Sort, attributes: ['id', 'name'], duplicating: false, through: { attributes: [] } },
+        { model: Model.Tag, attributes: ['id', 'name'], duplicating: false, through: { attributes: [] } }
+      ]
+    })
+    if (article) {
+      return new global.Success('查询成功', article).returnData()
+    } else {
+      return new global.ParameterException('文章不存在').returnData()
     }
   }
 

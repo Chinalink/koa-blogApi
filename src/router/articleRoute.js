@@ -2,7 +2,7 @@
  * @Description: 文章相关Api
  * @Author: HuGang
  * @Date: 2020-07-25 13:34:43
- * @LastEditTime: 2020-08-13 23:54:23
+ * @LastEditTime: 2020-08-23 20:08:30
  */ 
 
 const Router = require('@koa/router')
@@ -15,6 +15,7 @@ router
   .post('/article/post', Authorize, ArticleController.createArticle) // 创建文章
   .delete('/article/post/:id', Authorize, ArticleController.deleteArticle) // 删除文章
   .put('/article/post/:id', Authorize, ArticleController.updateArticle) // 更新文章
+  .get('/article/post/detail', Authorize, ArticleController.queryArticle) // 获取文章详情
   .get('/article/post', Authorize, ArticleController.queryArticleList) // 获取文章列表
   .post('/article/sort', Authorize, ArticleController.createSort) // 创建分类
   .delete('/article/sort/:id', Authorize, ArticleController.deleteSort) // 删除分类
