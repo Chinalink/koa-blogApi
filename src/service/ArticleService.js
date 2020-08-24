@@ -2,7 +2,7 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-24 18:19:09
+ * @LastEditTime: 2020-08-25 00:14:48
  */ 
 
 const sequelize = require('../base/dbConn');
@@ -92,9 +92,9 @@ class ArticleService {
                 FROM article AS article
                 LEFT OUTER JOIN article_${lowerCaseModelName} AS article${modelName}
                 INNER JOIN ${lowerCaseModelName} AS ${lowerCaseModelName}s
-                ON ${lowerCaseModelName}.${lowerCaseModelName}_id = article${modelName}.${lowerCaseModelName}_id
+                ON ${lowerCaseModelName}s.${lowerCaseModelName}_id = article${modelName}.${lowerCaseModelName}_id
                 ON article.article_id = article${modelName}.article_id
-                WHERE ${lowerCaseModelName}.${lowerCaseModelName}_id = article${modelName}.${lowerCaseModelName}_id
+                WHERE ${lowerCaseModelName}s.${lowerCaseModelName}_id = article${modelName}.${lowerCaseModelName}_id
               )`),
               'articleTotal'
             ]
