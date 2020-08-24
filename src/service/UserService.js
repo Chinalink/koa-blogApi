@@ -2,12 +2,10 @@
  * @Description: 
  * @Author: HuGang
  * @Date: 2020-07-16 16:59:01
- * @LastEditTime: 2020-08-14 17:04:52
+ * @LastEditTime: 2020-08-24 18:09:57
  */ 
-
- // sequelize
-https://github.com/demopark/sequelize-docs-Zh-CN/blob/master/core-concepts/getting-started.md
-var { Op, Sequelize } = require("sequelize");
+var { Op } = require("sequelize");
+const sequelize = require('../base/dbConn');
 var Model = require('../model');
 
 class UserService {
@@ -30,9 +28,9 @@ class UserService {
         order: [['createdAt', 'desc']],
         attributes: {
           include: [
-            [Sequelize.col('role.roles_id'), 'roles'],
-            [Sequelize.col('role.roles_name'), 'roleName'],
-            [Sequelize.fn('COUNT', Sequelize.col('articles.article_id')), 'articleTotal']
+            [sequelize.col('role.roles_id'), 'roles'],
+            [sequelize.col('role.roles_name'), 'roleName'],
+            [sequelize.fn('COUNT', sequelize.col('articles.article_id')), 'articleTotal']
           ],
           exclude: ['password']
         }, 

@@ -2,10 +2,11 @@
  * @Description: 文章相关Service
  * @Author: HuGang
  * @Date: 2020-07-31 15:25:07
- * @LastEditTime: 2020-08-23 20:17:57
+ * @LastEditTime: 2020-08-24 18:19:09
  */ 
 
-const { Op, Sequelize } = require("sequelize");
+const sequelize = require('../base/dbConn');
+const { Op } = require("sequelize");
 var Model = require('../model');
 
 class ArticleService {
@@ -78,6 +79,7 @@ class ArticleService {
   // 查询所有分类
   static async SQLquerySortOrTagList(query, modelName) {
     try {
+      const lowerCaseModelName = modelName.toLowerCase()
       const { count, rows } = await Model[modelName].findAndCountAll({
         limit: query.pageSize,
         offset: (query.current - 1) * query.pageSize,
@@ -85,16 +87,23 @@ class ArticleService {
         attributes: {
           include: [
             [
-              Sequelize.literal(`(                    
-                SELECT COUNT(article.article_id) AS count                 
+              sequelize.literal(`(
+                SELECT COUNT(article.article_id) AS count
                 FROM article AS article
-                INNER JOIN article_${modelName.toLowerCase()} AS article${modelName}
+                LEFT OUTER JOIN article_${lowerCaseModelName} AS article${modelName}
+                INNER JOIN ${lowerCaseModelName} AS ${lowerCaseModelName}s
+                ON ${lowerCaseModelName}.${lowerCaseModelName}_id = article${modelName}.${lowerCaseModelName}_id
                 ON article.article_id = article${modelName}.article_id
+                WHERE ${lowerCaseModelName}.${lowerCaseModelName}_id = article${modelName}.${lowerCaseModelName}_id
               )`),
               'articleTotal'
             ]
           ]
-        }
+        },
+        include: [
+          { model: Model.Article, attributes: [], duplicating: false, through: { attributes: [] } },
+        ],
+        distinct: true
       })
 
       const result = { result: rows, total: count }
@@ -122,35 +131,41 @@ class ArticleService {
   // 创建文章
   static async SQLcreateArticle(params) {
     try {
-      const newArticle = await Model.Article.create(params)
-
-      if (newArticle instanceof Model.Article) {
-        // 有选分类
-        if (params.category && params.category.length) {
-          const sorts = await Model.Sort.findAll({ where: { id: { [Op.or]: params.category } } })
-          await newArticle.setSorts(sorts)
-        } else {
-          const sort = await Model.Sort.findOne({ where: { name: '未分类' } })
-          await newArticle.setSorts(sort)
-        }
-        // 有选标签
-        if (params.tags && params.tags.length) {
-          const isHaveTags = params.tags.filter(item => typeof item != 'object')
-          const createTags = params.tags.filter(item => typeof item == 'object')
-          if (isHaveTags.length) {
-            const sorts = await Model.Tag.findAll({ where: { id: { [Op.or]: isHaveTags } } })
-            await newArticle.setTags(findTags)
+      // 多对多关联需使用事务保证成功执行，否则回滚
+      return await sequelize.transaction(async (t) => {
+        // 创建文章
+        const newArticle = await Model.Article.create(params, { transaction: t })
+        if (newArticle instanceof Model.Article) {
+          // 分类关联操作
+          if (params.category && params.category.length) {
+            const sorts = await Model.Sort.findAll({ where: { id: { [Op.or]: params.category } } })
+            await newArticle.setSorts(sorts, {transaction: t})
+          } else {
+            const sort = await Model.Sort.findOne({ where: { name: '未分类' } })
+            await newArticle.setSorts(sort, {transaction: t})
           }
-          if (createTags.length) {
-            const res = await Model.Tag.bulkCreate(createTags, { ignoreDuplicates: true })
-            await newArticle.setTags(res)
+          // 标签关联操作
+          if (params.tags && params.tags.length) {
+            const isHaveTags = params.tags.filter(item => typeof item != 'object')
+            const createTags = params.tags.filter(item => typeof item == 'object')
+            if (isHaveTags.length) {
+              const sorts = await Model.Tag.findAll(
+                { where: { id: { [Op.or]: isHaveTags } } }, 
+                { transaction: t }
+              )
+              await newArticle.setTags(findTags, {transaction: t})
+            }
+            if (createTags.length) {
+              const res = await Model.Tag.bulkCreate(createTags, { ignoreDuplicates: true, transaction: t })
+              await newArticle.setTags(res, {transaction: t})
+            }
           }
+          return new global.Success('创建文章成功').returnData()
         }
-        return new global.Success('创建文章成功').returnData()
-      }
+      })
     } catch (error) {
       console.log(error)
-      throw new global.ParameterException(error.errors[0].message)
+      // throw new global.ParameterException(error.errors[0].message)
     }
   }
 
@@ -177,7 +192,7 @@ class ArticleService {
       offset: (query.current - 1) * query.pageSize,
       attributes: { 
         include: [
-          [Sequelize.col('user.user_nick_name'), 'author']
+          [sequelize.col('user.user_nick_name'), 'author']
         ],
         exclude: ['timer']
       },
