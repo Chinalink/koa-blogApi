@@ -2,7 +2,7 @@
  * @Description: 中间件配置及加载
  * @Author: HuGang
  * @Date: 2021-05-24 16:27:56
- * @LastEditTime: 2021-05-25 17:35:51
+ * @LastEditTime: 2021-05-25 18:20:46
  */
 const sequelize = require('./db'); // 数据库ORM
 
@@ -14,19 +14,22 @@ const koaBody = require('koa-body') // body解析、图片上传中间件
 
 // https://joi.dev/api/?v=17.4.0#example
 const Joi = require('joi'); // 表单校验
+const catchError = require('../middlewares/catchError'); // 异常处理
+const Exceptions = require('../middlewares/httpException')
 
 class InitManager {
   // 初始化
   static initCore(app) {
     InitManager.app = app
     InitManager.loadMiddlewares()
-    InitManager.initLoadValidator()
+    InitManager.loadPlugins()
     InitManager.initLoadSequelize()
     InitManager.initLoadRouters()
   }
 
   static loadMiddlewares() {
     InitManager.app
+      .use(catchError)
       .use(cors())
       .use(koaBody({
         multipart: true,
@@ -37,8 +40,9 @@ class InitManager {
       }))
   }
 
-  static initLoadValidator() {
+  static loadPlugins() {
     global.Joi = Joi
+    global.Exceptions = Exceptions
   }
 
   // 数据库连接

@@ -2,7 +2,7 @@
  * @Description: 配置文件
  * @Author: HuGang
  * @Date: 2021-05-24 17:09:33
- * @LastEditTime: 2021-05-24 17:11:39
+ * @LastEditTime: 2021-05-25 14:32:26
  */
 
 const DBConfig = {
@@ -27,6 +27,14 @@ const DBConfig = {
   }
 }
 
+const jwtConfig = {
+  secretKey: 'HxD&CxM',
+  expiresIn: {
+    expiresIn: 60 * 60 * 2
+  }
+}
+
 module.exports = {
   DBConfig,
+  jwtConfig
 }
